@@ -1,0 +1,36 @@
+
+	java:S112d"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8ùØ’§ç1J$00bb27fa-f983-45f0-83b4-fb920b103bae
+¬
+java:S1319"iThe type of "documents" should be an interface such as "List" rather than the implementation "ArrayList".(ê­ñ¢8ıØ’§ç1J$fb4a5931-1fe1-4d42-b09b-97bf899b06e8
+±
+java:S1319"mThe type of "listDocuments" should be an interface such as "List" rather than the implementation "ArrayList".(„À8¦î·§ç1J$39eeb695-3264-4d12-af1e-f2f216842040
+¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¢‹Û€üÿÿÿÿ8íÙõ²ç1J$d3c4f315-f176-4f34-980e-1b1b983fad07
+k
+java:S2189""Add an end condition to this loop.(˜ïˆÿÿÿÿÿ8ÌÙ’§ç1J$0fe32a4a-c65d-4e1c-aaec-ee3907033e54
+Ê
+java:S1186•"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(ÈÀòùÿÿÿÿ8ÏÙ’§ç1J$8652b80a-8e6d-4b33-9fdc-30d4f3d6f8ba
+m	java:S106"+Replace this use of System.out by a logger.(™û”8ƒÜõ²ç1J$61d87b7f-49e9-472e-9cbe-b74f1855d58b
+r	java:S106"+Replace this use of System.out by a logger.(¾ê¢ûùÿÿÿÿ8‡Üõ²ç1J$57e6bdd6-d6a2-4a89-a3c3-0922d5ba9333
+r	java:S106"+Replace this use of System.out by a logger.(æÌÖ‰ÿÿÿÿÿ8ŠÜõ²ç1J$53ed9b44-5db0-45c7-901d-d70dfac90091
+r	java:S106""+Replace this use of System.out by a logger.(ø¦±…üÿÿÿÿ8”Üõ²ç1J$a61e71cf-5e0f-496c-8aec-ec01d31e0518
+r	java:S106("+Replace this use of System.out by a logger.(Åâÿ—üÿÿÿÿ8™Üõ²ç1J$80489230-a2eb-47dd-bcaa-0327e11d62b2
+r	java:S106,"+Replace this use of System.out by a logger.(©æìûÿÿÿÿ8œÜõ²ç1J$95c32a7a-e252-4b6a-84e6-12bdbbf83662
+r	java:S106/"+Replace this use of System.out by a logger.(—–ĞÇşÿÿÿÿ8¡Üõ²ç1J$3755436e-8898-4a1a-a0ab-89fed2328910
+m	java:S1062"+Replace this use of System.out by a logger.(˜‚øË8¤Üõ²ç1J$8b911fe7-04e2-44da-88e4-792a5f82da59
+m	java:S1067"+Replace this use of System.out by a logger.(Êí¶ã8©Üõ²ç1J$a7d36c2a-515b-47bd-84a9-011d323fa30d
+r	java:S106P"+Replace this use of System.out by a logger.(¥é¸ïûÿÿÿÿ8áÜõ²ç1J$555ba6dc-ca36-4e14-9041-cab475c9092b
+m	java:S106X"+Replace this use of System.out by a logger.(õÇ‚ë8æÜõ²ç1J$c1d71c53-87dd-4e3a-95d8-c4f0925bea75
+r	java:S106\"+Replace this use of System.out by a logger.(¬±øéøÿÿÿÿ8éÜõ²ç1J$907785ba-6952-4e10-a211-208c9e1a601a
+o
+java:S3011a",This accessibility update should be removed.(²ñ§•8ŠÚ’§ç1J$0bca94aa-96cd-4699-a95d-b41fbd036cb6
+t
+java:S3011b",This accessibility bypass should be removed.(‡Ò”„ÿÿÿÿÿ8ŒÚ’§ç1J$798b5da8-58f0-46f9-9b5c-dcb5b835208f
+r	java:S106r"+Replace this use of System.out by a logger.(Í½íâıÿÿÿÿ8ıÜõ²ç1J$fe4cb987-c98a-471a-b242-b3694c935fb6
+r	java:S106s"+Replace this use of System.out by a logger.(ŒÃÑÃüÿÿÿÿ8ÿÜõ²ç1J$fc1cf470-eb20-47f2-bf0b-fd8e0ba919df
+r	java:S106t"+Replace this use of System.out by a logger.(¶–ñøÿÿÿÿÿ8€İõ²ç1J$86032dcc-148f-4447-915c-7b7182be935d
+l	java:S106u"+Replace this use of System.out by a logger.(¤¤Èf8İõ²ç1J$6e8bf4fd-eec6-4c99-8704-a455693d95f4
+r	java:S106v"+Replace this use of System.out by a logger.(­“Î¾ıÿÿÿÿ8ƒİõ²ç1J$692db2f3-baf4-4a44-aa50-97c74526a33b
+m	java:S106w"+Replace this use of System.out by a logger.(ÉÆ¶¶8„İõ²ç1J$360415d2-2d7d-46a3-b159-e1d1408ffd8b
+r	java:S106y"+Replace this use of System.out by a logger.(‹ÕÃ±ÿÿÿÿÿ8…İõ²ç1J$113076cd-cfbe-4da2-83ba-bef8fdd1e95f
+”	java:S128"LEnd this switch case with an unconditional break, return or throw statement.(Ÿ¥éùÿÿÿÿ8›Ú’§ç1J$3d51d199-8d7b-45eb-b56c-e08eaaddb33b
+n	java:S106"+Replace this use of System.out by a logger.(ˆîé«8–İõ²ç1J$2a2a8662-8f88-4482-96b6-2b6c84a4efe6
