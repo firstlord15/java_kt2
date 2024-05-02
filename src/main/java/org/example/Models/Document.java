@@ -8,6 +8,8 @@ public interface Document {
     void setId(int id);
     void setNumber(int number);
 
+    DocumentType getType();
+
     // Метод для вывода информации о документе
     String displayInfo();
 }

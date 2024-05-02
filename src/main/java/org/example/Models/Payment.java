@@ -1,8 +1,16 @@
 package org.example.Models;
 
+//import jakarta.persistence.Entity;
+//import jakarta.persistence.GeneratedValue;
+//import jakarta.persistence.GenerationType;
+//import jakarta.persistence.Id;
+
 import java.time.LocalDateTime;
 
+//@Entity
 public class Payment implements Document {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private int paymentNumber;
     private LocalDateTime paymentDate; // дата и время
@@ -13,6 +21,10 @@ public class Payment implements Document {
         this.paymentNumber = paymentNumber;
         this.paymentDate = paymentDate;
         this.paymentName = paymentName;
+    }
+
+    public Payment() {
+
     }
 
     @Override
@@ -26,8 +38,13 @@ public class Payment implements Document {
     }
 
     @Override
+    public DocumentType getType() {
+        return DocumentType.PAYMENT;
+    }
+
+    @Override
     public String displayInfo() {
-        return  "[Document Payment]:" +
+        return  getType() + ":" +
                 "id: "+ id +"\n" +
                 "number: "+ paymentNumber +"\n" +
                 "date: "+ paymentDate +"\n" +

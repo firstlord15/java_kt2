@@ -14,7 +14,7 @@ public class Menu {
 
     public Menu() {
         this.scanner = new Scanner(System.in);
-        this.listDocuments = new ArrayList<ArrayList<Document>>();
+        this.listDocuments = new ArrayList<>();
     }
 
     public void scannerClose(){

@@ -1,0 +1,51 @@
+--------------
+CREATE TABLE invoice (
+    id SERIAL PRIMARY KEY,
+    number VARCHAR(255),
+    date TIMESTAMP,
+    clientName VARCHAR(255),
+    address VARCHAR(255)
+);
+
+--------------
+CREATE TABLE "order" (
+    id SERIAL PRIMARY KEY,
+    number VARCHAR(255),
+    date TIMESTAMP,
+    buyerName VARCHAR(255),
+    address TEXT
+);
+
+CREATE TABLE products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    price NUMERIC(10, 2)
+);
+
+CREATE TABLE order_products (
+    id SERIAL PRIMARY KEY,
+    order_id INT,
+    product_id INT,
+    FOREIGN KEY (order_id) REFERENCES "order"(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+--------------
+CREATE TABLE payment (
+    id SERIAL PRIMARY KEY,
+    number VARCHAR(255),
+    date TIMESTAMP,
+    paymentName VARCHAR(255)
+);
+
+--------------
+CREATE TABLE paymentinvoice (
+    id SERIAL PRIMARY KEY,
+    number VARCHAR(255),
+    date TIMESTAMP,
+    customerName VARCHAR(255),
+    comments TEXT
+);
+
+
+

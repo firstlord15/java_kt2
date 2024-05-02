@@ -1,13 +1,23 @@
 package org.example.Models;
+//import jakarta.persistence.Entity;
+//import jakarta.persistence.GeneratedValue;
+//import jakarta.persistence.GenerationType;
+//import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
 
+
+//@Entity
 public class Invoice implements Document {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private int invoiceNumber;
     private LocalDateTime invoiceDate; // дата и время
     private String clientName; // заказчик
     private String address;
+
+    public Invoice() {}
 
     public Invoice(int id, int invoiceNumber, LocalDateTime invoiceDate, String clientName, String address) {
         this.id = id;
@@ -29,7 +39,7 @@ public class Invoice implements Document {
 
     @Override
     public String displayInfo() {
-        return  "\n[Document Invoice]:" +
+        return  getType() + ":" +
                 "id: "+ id +"\n" +
                 "number: "+ invoiceNumber +"\n" +
                 "date: "+ invoiceDate +"\n" +
@@ -45,6 +55,11 @@ public class Invoice implements Document {
     @Override
     public void setNumber(int invoiceNumber) {
         this.invoiceNumber = invoiceNumber;
+    }
+
+    @Override
+    public DocumentType getType() {
+        return DocumentType.INVOICE;
     }
 
     public LocalDateTime getInvoiceDate() {

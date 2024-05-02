@@ -1,32 +1,20 @@
 
-Õ
-java:S1192"‘Define a constant instead of duplicating this literal "Ğ¡Ğ¾Ğ·Ğ´Ğ°Ğ½Ğ¸Ğµ Ğ´Ğ¾ĞºÑƒĞ¼ĞµĞ½Ñ‚Ğ° Ğ¿Ñ€ĞµÑ€Ğ²Ğ°Ğ½Ğ¾ Ğ¿Ğ¾Ğ»ÑŒĞ·Ğ¾Ğ²Ğ°Ñ‚ĞµĞ»ĞµĞ¼." 4 times.(ÏÈ¶8ÕÓ’§ç1J$9a26f31b-3745-432c-af59-a3d950c76217
- 	java:S135d"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8ÛÓ’§ç1J$63236aff-33ce-4aaa-a963-d490af8effc5
-¹
-java:S1319Œ"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(Öñëøÿÿÿÿ8İÓ’§ç1J$2e476a8c-8937-4e00-ada7-dad9cefe0aa6
-¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¢‹Û€üÿÿÿÿ8Çäõ²ç1J$da48093d-7994-46d1-a750-0ecd4f71446a
-m	java:S106"+Replace this use of System.out by a logger.(ÏÈ¶8Ïèõ²ç1J$4c08e00c-9e7f-4fa9-909d-ff3043c1c16e
-n
-java:S1168"+Return an empty collection instead of null.(¥¹ï8ŠÔ’§ç1J$c3055508-b6e8-48b4-967c-7f27a346b0a6
-n
-java:S1168%"+Return an empty collection instead of null.(¥§ğË8“Ô’§ç1J$147a5ed0-6051-41f8-8786-10118948b0aa
-r	java:S106,"+Replace this use of System.out by a logger.(—€†úÿÿÿÿ8İèõ²ç1J$5276bbbf-6d85-4176-95d0-f6682137371b
-m	java:S106B"+Replace this use of System.out by a logger.(ÏÈ¶8çèõ²ç1J$ba43450b-4383-440b-95d2-1ce01c23fbd4
-m	java:S106O"+Replace this use of System.out by a logger.(ÏÈ¶8ìèõ²ç1J$f1176ae5-9eb6-4066-a779-f4af489b3d8f
-m	java:S106_"+Replace this use of System.out by a logger.(ÏÈ¶8õèõ²ç1J$f5686727-0d3e-4fb1-bbf7-cc9a04b2cd88
-r	java:S106c"+Replace this use of System.out by a logger.(‚š‚»ÿÿÿÿÿ8öèõ²ç1J$baa39928-5b1d-418e-9b4b-a1f824164b22
-m	java:S106e"+Replace this use of System.out by a logger.(Öõ…Á8øèõ²ç1J$8ae20bb4-0a1a-4a08-a873-27b3561205c6
-©
-java:S2178h"fCorrect this "&" to "&&" and extract the right operand to a variable if it should always be evaluated.(Œâ®¬8ÆÔ’§ç1J$b0dff5f2-5020-4a91-9ef0-b8a0c34c96dd
-m	java:S106l"+Replace this use of System.out by a logger.(øÑšÜ8şèõ²ç1J$55b1fc29-cafc-487c-9c28-a553cb449f59
-r	java:S106r"+Replace this use of System.out by a logger.(Ã¨Ñúÿÿÿÿ8éõ²ç1J$29ec6a12-60b4-4607-bfa6-691ab7f551d9
-m	java:S106~"+Replace this use of System.out by a logger.(è—¨à8†éõ²ç1J$67c63a1e-e120-4ec1-9a6b-80a786b4dc63
-s	java:S106…"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8ˆéõ²ç1J$dac1d257-49a2-4870-a024-2f47dff56de1
-o
-java:S1168’"+Return an empty collection instead of null.(¥¹ï8‰Ë´§ç1J$22d17456-d56c-46fc-81c5-d21d0db75c44
-o
-java:S1168—"+Return an empty collection instead of null.(¥¹ï8‹Ë´§ç1J$7f74413d-a15f-40ed-b8d7-43a2d07ceb62
-o
-java:S1168œ"+Return an empty collection instead of null.(¥¹ï8Ë´§ç1J$2d26076c-0740-467d-8b3e-f24db1876336
-o
-java:S1168¡"+Return an empty collection instead of null.(¥¹ï8ŸË´§ç1J$86b0af7b-9311-45d0-b44d-a760a1c2c9a6
+¯
+java:S1192"‘Define a constant instead of duplicating this literal "Ğ¡Ğ¾Ğ·Ğ´Ğ°Ğ½Ğ¸Ğµ Ğ´Ğ¾ĞºÑƒĞ¼ĞµĞ½Ñ‚Ğ° Ğ¿Ñ€ĞµÑ€Ğ²Ğ°Ğ½Ğ¾ Ğ¿Ğ¾Ğ»ÑŒĞ·Ğ¾Ğ²Ğ°Ñ‚ĞµĞ»ĞµĞ¼." 4 times.(ÏÈ¶8Œ¡ûÆë1
+z	java:S135d"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8–¡ûÆë1
+“
+java:S1319Œ"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(Öñëøÿÿÿÿ8¨¡ûÆë1
+H
+java:S1168"+Return an empty collection instead of null.(¥¹ï8“¨ûÆë1
+H
+java:S1168%"+Return an empty collection instead of null.(¥§ğË8´¨ûÆë1
+ƒ
+java:S2178h"fCorrect this "&" to "&&" and extract the right operand to a variable if it should always be evaluated.(Œâ®¬8ó¨ûÆë1
+I
+java:S1168’"+Return an empty collection instead of null.(¥¹ï8Ê©ûÆë1
+I
+java:S1168—"+Return an empty collection instead of null.(¥¹ï8Î©ûÆë1
+I
+java:S1168œ"+Return an empty collection instead of null.(¥¹ï8Ò©ûÆë1
+I
+java:S1168¡"+Return an empty collection instead of null.(¥¹ï8Ö©ûÆë1

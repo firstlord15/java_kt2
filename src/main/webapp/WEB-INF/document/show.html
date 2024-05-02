@@ -1,0 +1,13 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div th:each="documentList : ${document}">
+        <p th:text="${documentList.getId()}">VALUE</p>
+        <p th:text="${documentList.getNumber()}">VALUE</p>
+        <p th:text="${documentList.getType()}">VALUE</p>
+    </div>
+</body>
+</html>

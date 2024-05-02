@@ -1,8 +1,16 @@
 package org.example.Models;
 
+//import jakarta.persistence.Entity;
+//import jakarta.persistence.GeneratedValue;
+//import jakarta.persistence.GenerationType;
+//import jakarta.persistence.Id;
+
 import java.time.LocalDateTime;
 
+//@Entity
 public class PaymentInvoice implements Document {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private int paymentInvoiceNumber;
     private LocalDateTime paymentInvoiceDate;
@@ -17,6 +25,10 @@ public class PaymentInvoice implements Document {
         this.comments = comments;
     }
 
+    public PaymentInvoice() {
+
+    }
+
     @Override
     public int getId() {
         return id;
@@ -28,8 +40,13 @@ public class PaymentInvoice implements Document {
     }
 
     @Override
+    public DocumentType getType() {
+        return DocumentType.PAYMENT_INVOICE;
+    }
+
+    @Override
     public String displayInfo() {
-        return  "[Document PaymentInvoice]:" +
+        return  getType() + ":" +
                 "id: "+ id +"\n" +
                 "number: "+ paymentInvoiceNumber +"\n" +
                 "date: "+ paymentInvoiceDate +"\n" +

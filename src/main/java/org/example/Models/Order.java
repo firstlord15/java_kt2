@@ -1,10 +1,18 @@
 
 package org.example.Models;
 
+//import jakarta.persistence.Entity;
+//import jakarta.persistence.GeneratedValue;
+//import jakarta.persistence.GenerationType;
+//import jakarta.persistence.Id;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+//@Entity
 public class Order implements Document {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private int orderNumber;
     private LocalDateTime orderDate;
@@ -17,6 +25,10 @@ public class Order implements Document {
         this.orderDate = orderDate;
         this.buyerName = buyerName;
         this.products = products;
+    }
+
+    public Order() {
+
     }
 
     @Override
@@ -33,7 +45,7 @@ public class Order implements Document {
     public String displayInfo() {
         String[] productInfo = products.get(0).split(" ");
 
-        return  "[Document Order]:" +
+        return  getType() + ":" +
                 "id: "+ id +"\n" +
                 "number: "+ orderNumber +"\n" +
                 "date: "+ orderDate +"\n" +
@@ -49,6 +61,11 @@ public class Order implements Document {
     @Override
     public void setNumber(int orderNumber) {
         this.orderNumber = orderNumber;
+    }
+
+    @Override
+    public DocumentType getType() {
+        return DocumentType.ORDER;
     }
 
     public LocalDateTime getOrderDate() {
