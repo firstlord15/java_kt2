@@ -1,7 +1,7 @@
 --------------
 CREATE TABLE invoice (
     id SERIAL PRIMARY KEY,
-    number VARCHAR(255),
+    number int,
     date TIMESTAMP,
     clientName VARCHAR(255),
     address VARCHAR(255)
@@ -10,7 +10,7 @@ CREATE TABLE invoice (
 --------------
 CREATE TABLE "order" (
     id SERIAL PRIMARY KEY,
-    number VARCHAR(255),
+    number int,
     date TIMESTAMP,
     buyerName VARCHAR(255),
     address TEXT
@@ -33,19 +33,84 @@ CREATE TABLE order_products (
 --------------
 CREATE TABLE payment (
     id SERIAL PRIMARY KEY,
-    number VARCHAR(255),
+    number int,
     date TIMESTAMP,
     paymentName VARCHAR(255)
 );
 
 --------------
-CREATE TABLE paymentinvoice (
+CREATE TABLE paymentInvoice (
     id SERIAL PRIMARY KEY,
-    number VARCHAR(255),
+    number int,
     date TIMESTAMP,
     customerName VARCHAR(255),
     comments TEXT
 );
+
+-- Заполняем таблицу invoice
+INSERT INTO invoice (number, date, clientName, address)
+VALUES ('61', '2024-05-02', 'Client C', '789 Maple St'),
+       ('53', '2024-05-03', 'Client D', '101 Oak St'),
+       ('59', '2024-05-04', 'Client E', '345 Elm St'),
+       ('2', '2024-05-05', 'Client F', '567 Pine St'),
+       ('8', '2024-05-06', 'Client G', '789 Cedar St'),
+       ('38', '2024-05-07', 'Client H', '123 Spruce St'),
+       ('66', '2024-05-08', 'Client I', '456 Birch St'),
+       ('39', '2024-05-09', 'Client J', '678 Walnut St'),
+       ('73', '2024-05-10', 'Client K', '910 Chestnut St'),
+       ('83', '2024-05-11', 'Client L', '234 Ash St');
+
+-- Заполняем таблицу "order"
+INSERT INTO "order" (number, date, buyerName, address)
+VALUES ('61', '2024-05-02', 'Buyer C', '789 Maple St'),
+       ('53', '2024-05-03', 'Buyer D', '101 Oak St'),
+       ('59', '2024-05-04', 'Buyer E', '345 Elm St'),
+       ('2', '2024-05-05', 'Buyer F', '567 Pine St'),
+       ('8', '2024-05-06', 'Buyer G', '789 Cedar St'),
+       ('38', '2024-05-07', 'Buyer H', '123 Spruce St'),
+       ('66', '2024-05-08', 'Buyer I', '456 Birch St'),
+       ('39', '2024-05-09', 'Buyer J', '678 Walnut St'),
+       ('73', '2024-05-10', 'Buyer K', '910 Chestnut St'),
+       ('83', '2024-05-11', 'Buyer L', '234 Ash St');
+
+-- Заполняем таблицу products
+INSERT INTO products (name, price)
+VALUES ('Product 4', 30.25),
+       ('Product 5', 40.75),
+       ('Product 6', 50.99),
+       ('Product 7', 60.50),
+       ('Product 8', 70.25),
+       ('Product 9', 80.75),
+       ('Product 10', 90.99),
+       ('Product 11', 100.50),
+       ('Product 12', 110.25),
+       ('Product 13', 120.75);
+
+-- Заполняем таблицу payment
+INSERT INTO payment (number, date, paymentName)
+VALUES ('61', '2024-05-02', 'Payment C'),
+       ('53', '2024-05-03', 'Payment D'),
+       ('59', '2024-05-04', 'Payment E'),
+       ('2', '2024-05-05', 'Payment F'),
+       ('8', '2024-05-06', 'Payment G'),
+       ('38', '2024-05-07', 'Payment H'),
+       ('66', '2024-05-08', 'Payment I'),
+       ('39', '2024-05-09', 'Payment J'),
+       ('73', '2024-05-10', 'Payment K'),
+       ('83', '2024-05-11', 'Payment L');
+
+-- Заполняем таблицу paymentInvoice
+INSERT INTO paymentInvoice (number, date, customerName, comments)
+VALUES ('61', '2024-05-02', 'Customer C', 'Comments for invoice C'),
+       ('53', '2024-05-03', 'Customer D', 'Comments for invoice D'),
+       ('59', '2024-05-04', 'Customer E', 'Comments for invoice E'),
+       ('2', '2024-05-05', 'Customer F', 'Comments for invoice F'),
+       ('8', '2024-05-06', 'Customer G', 'Comments for invoice G'),
+       ('38', '2024-05-07', 'Customer H', 'Comments for invoice H'),
+       ('66', '2024-05-08', 'Customer I', 'Comments for invoice I'),
+       ('39', '2024-05-09', 'Customer J', 'Comments for invoice J'),
+       ('73', '2024-05-10', 'Customer K', 'Comments for invoice K'),
+       ('83', '2024-05-11', 'Customer L', 'Comments for invoice L');
 
 
 
