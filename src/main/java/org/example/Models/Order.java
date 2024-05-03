@@ -8,6 +8,7 @@ package org.example.Models;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 //@Entity
 public class Order implements Document {
@@ -42,15 +43,17 @@ public class Order implements Document {
     }
 
     @Override
-    public String displayInfo() {
+    public List<String> displayInfo() {
         String[] productInfo = products.get(0).split(" ");
 
-        return  getType() + ":" +
-                "id: "+ id +"\n" +
-                "number: "+ orderNumber +"\n" +
-                "date: "+ orderDate +"\n" +
-                "customerName: "+ buyerName +"\n" +
-                "Products: "+ productInfo[0] + " " + productInfo[1] + " " + productInfo[2] + " " + " (+" +  (products.size() - 1) +")" + "\n";
+        List<String> list = new ArrayList<>();
+        list.add("id: "+ id);
+        list.add("number: "+ orderNumber);
+        list.add("date: "+ orderDate);
+        list.add("customerName: "+ buyerName);
+        list.add("Products: "+ productInfo[0] + " " + productInfo[1] + " " + productInfo[2] + " " + " (+" +  (products.size() - 1) +")");
+
+        return list;
     }
 
     @Override

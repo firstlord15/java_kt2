@@ -19,46 +19,6 @@ public class DocumentDAO {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<Document> getDocList(int id){
-        List<Document> documents = new ArrayList<>();
-
-        Invoice invoice = jdbcTemplate
-                .query(
-                        "SELECT * FROM Invoice WHERE id=?",
-                        new Object[]{id},
-                        new BeanPropertyRowMapper<>(Invoice.class)
-                ).stream().findAny().orElse(null);
-
-        int number = Objects.requireNonNull(invoice).getNumber();
-        Order order = jdbcTemplate
-                .query(
-                        "SELECT * FROM public.order WHERE number=?",
-                        new Object[]{number},
-                        new BeanPropertyRowMapper<>(Order.class)
-                ).stream().findAny().orElse(null);
-
-        Payment payment = jdbcTemplate
-                .query(
-                        "SELECT * FROM payment WHERE number=?",
-                        new Object[]{number},
-                        new BeanPropertyRowMapper<>(Payment.class)
-                ).stream().findAny().orElse(null);
-
-        PaymentInvoice paymentInvoice = jdbcTemplate
-                .query(
-                        "SELECT * FROM paymentinvoice WHERE number=?",
-                        new Object[]{number},
-                        new BeanPropertyRowMapper<>(PaymentInvoice.class)
-                ).stream().findAny().orElse(null);
-
-        documents.add(invoice);
-        documents.add(order);
-        documents.add(payment);
-        documents.add(paymentInvoice);
-
-        return documents;
-    }
-
     public List<List<Document>> getDocList(){
         List<List<Document>> documents = new ArrayList<>();
 
@@ -89,6 +49,34 @@ public class DocumentDAO {
             documents.add(documentList);
         }
 //        System.out.println("documents size: " + documents.size());
+
+        return documents;
+    }
+
+    public List<Document> getDocList(int id){
+        List<Document> documents = new ArrayList<>();
+
+        Invoice invoice = jdbcTemplate
+                .query("SELECT * FROM Invoice WHERE id=?", new Object[]{id}, new BeanPropertyRowMapper<>(Invoice.class))
+                .stream().findAny().orElse(null);
+
+        int number = Objects.requireNonNull(invoice).getNumber();
+        Order order = jdbcTemplate
+                .query("SELECT * FROM \"order\" WHERE number=?", new Object[]{number}, new BeanPropertyRowMapper<>(Order.class))
+                .stream().findAny().orElse(null);
+
+        Payment payment = jdbcTemplate
+                .query("SELECT * FROM payment WHERE number=?", new Object[]{number}, new BeanPropertyRowMapper<>(Payment.class))
+                .stream().findAny().orElse(null);
+
+        PaymentInvoice paymentInvoice = jdbcTemplate
+                .query("SELECT * FROM paymentinvoice WHERE number=?", new Object[]{number}, new BeanPropertyRowMapper<>(PaymentInvoice.class))
+                .stream().findAny().orElse(null);
+
+        documents.add(invoice);
+        documents.add(order);
+        documents.add(payment);
+        documents.add(paymentInvoice);
 
         return documents;
     }

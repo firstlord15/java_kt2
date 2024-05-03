@@ -10,20 +10,20 @@
 <div class="wrapper">
     <div class="container">
         <h1 class="mt-5"><kbd>Documents</kbd></h1>
-        <table class="table table-dark table-striped">
+        <table class="table table-dark table-hover">
             <thead>
-            <tr>
-                <th scope="col">Document id</th>
-                <th scope="col">Document number</th>
-                <th scope="col">Document href</th>
-            </tr>
+                <tr>
+                    <th scope="col">Document id</th>
+                    <th scope="col">Document number</th>
+                    <th scope="col">Document href</th>
+                </tr>
             </thead>
             <tbody>
-            <tr th:each="documentList : ${document}">
-                <td th:text="${documentList[0].getId()}"></td>
-                <td th:text="${documentList[0].getNumber()}"></td>
-                <td><a th:href="@{/document/{id}(id=${documentList[0].getId()})}">Link to document</a></td>
-            </tr>
+                <tr th:each="documentObj : ${documents}">
+                    <td th:text="${documentObj[0].getId()}"></td>
+                    <td th:text="${documentObj[0].getNumber()}"></td>
+                    <td><a th:href="@{/document/{id}(id=${documentObj[0].getId()})}">Link to document</a></td>
+                </tr>
             </tbody>
         </table>
     </div>

@@ -5,6 +5,8 @@ package org.example.Models;
 //import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 //@Entity
@@ -38,13 +40,15 @@ public class Invoice implements Document {
     }
 
     @Override
-    public String displayInfo() {
-        return  getType() + ":" +
-                "id: "+ id +"\n" +
-                "number: "+ invoiceNumber +"\n" +
-                "date: "+ invoiceDate +"\n" +
-                "clientName: "+ clientName +"\n" +
-                "address: "+ address +"\n";
+    public List<String> displayInfo() {
+        List<String> list = new ArrayList<>();
+        list.add("id: "+ id);
+        list.add("number: "+ invoiceNumber);
+        list.add("date: "+ invoiceDate);
+        list.add("clientName: "+ clientName);
+        list.add("address: "+ address);
+
+        return list;
     }
 
     @Override

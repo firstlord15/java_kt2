@@ -6,6 +6,8 @@ package org.example.Models;
 //import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 //@Entity
 public class Payment implements Document {
@@ -43,12 +45,15 @@ public class Payment implements Document {
     }
 
     @Override
-    public String displayInfo() {
-        return  getType() + ":" +
-                "id: "+ id +"\n" +
-                "number: "+ paymentNumber +"\n" +
-                "date: "+ paymentDate +"\n" +
-                "paymentName: "+ paymentName +"\n";
+    public List<String> displayInfo() {
+
+        List<String> list = new ArrayList<>();
+        list.add("id: "+ id);
+        list.add("number: "+ paymentNumber);
+        list.add("date: "+ paymentDate);
+        list.add("clientName: "+ paymentName);
+
+        return list;
     }
 
     public String getPaymentName() {

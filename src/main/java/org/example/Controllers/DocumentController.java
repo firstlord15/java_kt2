@@ -21,13 +21,13 @@ public class DocumentController {
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("document", documentDAO.index());
+        model.addAttribute("documents", documentDAO.index());
         return "document/index";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("document", documentDAO.show(id));
+        model.addAttribute("documents", documentDAO.show(id));
         return "document/show";
     }
 }

@@ -1,5 +1,7 @@
 package org.example.Models;
 
+import java.util.List;
+
 public interface Document {
     // Метод для получения уникального идентификатора документа
     int getId();
@@ -11,5 +13,5 @@ public interface Document {
     DocumentType getType();
 
     // Метод для вывода информации о документе
-    String displayInfo();
+    List<String> displayInfo();
 }
