@@ -44,18 +44,6 @@ public class Payment implements Document {
         return DocumentType.PAYMENT;
     }
 
-    @Override
-    public List<String> displayInfo() {
-
-        List<String> list = new ArrayList<>();
-        list.add("id: "+ id);
-        list.add("number: "+ paymentNumber);
-        list.add("date: "+ paymentDate);
-        list.add("clientName: "+ paymentName);
-
-        return list;
-    }
-
     public String getPaymentName() {
         return paymentName;
     }
@@ -80,5 +68,17 @@ public class Payment implements Document {
     @Override
     public void setNumber(int paymentNumber) {
         this.paymentNumber = paymentNumber;
+    }
+
+    @Override
+    public List<String> displayInfo() {
+
+        List<String> list = new ArrayList<>();
+        list.add("id: "+ getId());
+        list.add("number: "+ getNumber());
+        list.add("date: "+ getPaymentDate());
+        list.add("clientName: "+ getPaymentName());
+
+        return list;
     }
 }

@@ -8,7 +8,7 @@
 <body>
     <div class="container">
         <h1 class="mt-5"><kbd>View document</kbd></h1>
-            <table class="table table-dark table-hover">
+            <table class="table table-dark table-hover table-bordered">
                 <thead>
                     <tr>
                         <th scope="col">Document Type</th>
@@ -16,26 +16,31 @@
                     </tr>
                 </thead>
                 <tbody>
-<!--                    <tr th:each="documentObj : ${documents}">-->
-<!--                        <td th:text="${documentObj.getType()}"></td>-->
-<!--                        <td th:each="element : ${documentObj.displayInfo()}" th:text="${element}"></td>-->
-<!--                    </tr>-->
-                    <tr>
-                        <td th:text="${documents.get(3).getType()}"></td>-->
-                        <td th:each="element : ${documents.get(3).displayInfo()}" th:text="${element}"></td>
-                    </tr>
-                    <tr>
-                        <td th:text="${documents.get(2).getType()}"></td>-->
-                        <td th:each="element : ${documents.get(2).displayInfo()}" th:text="${element}"></td>
-                    </tr>
-                    <tr>
-                        <td th:text="${documents.get(1).getType()}"></td>-->
-                        <td th:each="element : ${documents.get(1).displayInfo()}" th:text="${element}"></td>
-                    </tr><tr>
-                        <td th:text="${documents.get(0).getType()}"></td>-->
-                        <td th:each="element : ${documents.get(0).displayInfo()}" th:text="${element}"></td>
+                    <tr th:each="document : ${documents}">
+                        <td style="text-align: center; vertical-align: middle">
+                            <p th:text="${document.getType()}"></p>
+                        </td>
+                        <td>
+                            <p th:each="element : ${document.displayInfo()}" th:text="${element}">VALUE</p>
+                        </td>
                     </tr>
 
+<!--                    <tr>-->
+<!--                        <td th:text="${documents.get(3).getType()}"></td>-->
+<!--                        <td th:each="element : ${documents.get(3).displayInfo()}" th:text="${element}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td th:text="${documents.get(1).getType()}"></td>-->
+<!--                        <td th:each="element : ${documents.get(1).displayInfo()}" th:text="${element}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td th:text="${documents.get(2).getType()}"></td>-->
+<!--                        <td th:each="element : ${documents.get(2).displayInfo()}" th:text="${element}"></td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td th:text="${documents.get(3).getType()}"></td>-->
+<!--                        <td th:each="element : ${documents.get(3).displayInfo()}" th:text="${element}"></td>-->
+<!--                    </tr>-->
                 </tbody>
             </table>
     </div>

@@ -49,7 +49,6 @@ public class DocumentDAO {
             documents.add(documentList);
         }
 //        System.out.println("documents size: " + documents.size());
-
         return documents;
     }
 

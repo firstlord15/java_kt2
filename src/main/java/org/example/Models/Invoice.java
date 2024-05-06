@@ -19,7 +19,9 @@ public class Invoice implements Document {
     private String clientName; // заказчик
     private String address;
 
-    public Invoice() {}
+    public Invoice() {
+
+    }
 
     public Invoice(int id, int invoiceNumber, LocalDateTime invoiceDate, String clientName, String address) {
         this.id = id;
@@ -37,18 +39,6 @@ public class Invoice implements Document {
     @Override
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Override
-    public List<String> displayInfo() {
-        List<String> list = new ArrayList<>();
-        list.add("id: "+ id);
-        list.add("number: "+ invoiceNumber);
-        list.add("date: "+ invoiceDate);
-        list.add("clientName: "+ clientName);
-        list.add("address: "+ address);
-
-        return list;
     }
 
     @Override
@@ -88,5 +78,17 @@ public class Invoice implements Document {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    @Override
+    public List<String> displayInfo() {
+        List<String> list = new ArrayList<>();
+        list.add("id: "+ getId());
+        list.add("number: "+ getNumber());
+        list.add("date: "+ getInvoiceDate());
+        list.add("clientName: "+ getClientName());
+        list.add("address: "+ getAddress());
+
+        return list;
     }
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/document")
 public class DocumentController {
-
     private final DocumentDAO documentDAO;
 
     @Autowired
@@ -21,7 +20,7 @@ public class DocumentController {
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("documents", documentDAO.index());
+        model.addAttribute("Alldocuments", documentDAO.index());
         return "document/index";
     }
 

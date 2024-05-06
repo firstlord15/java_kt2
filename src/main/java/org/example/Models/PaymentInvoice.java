@@ -28,7 +28,6 @@ public class PaymentInvoice implements Document {
     }
 
     public PaymentInvoice() {
-
     }
 
     @Override
@@ -44,18 +43,6 @@ public class PaymentInvoice implements Document {
     @Override
     public DocumentType getType() {
         return DocumentType.PAYMENT_INVOICE;
-    }
-
-    @Override
-    public List<String> displayInfo() {
-        List<String> list = new ArrayList<>();
-        list.add("id: "+ id);
-        list.add("number: "+ paymentInvoiceNumber);
-        list.add("date: "+ paymentInvoiceDate);
-        list.add("clientName: "+ customerName);
-        list.add("comments: "+ comments);
-
-        return list;
     }
 
     public String getCustomerName() {
@@ -90,5 +77,17 @@ public class PaymentInvoice implements Document {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public List<String> displayInfo() {
+        List<String> list = new ArrayList<>();
+        list.add("id: "+ getId());
+        list.add("number: "+ getNumber());
+        list.add("date: "+ getInvoiceDate());
+        list.add("customerName: "+ getCustomerName());
+        list.add("comments: "+ getComments());
+
+        return list;
     }
 }
