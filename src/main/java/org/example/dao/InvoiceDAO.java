@@ -5,6 +5,10 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class InvoiceDAO extends BaseDAO<Invoice> {
     public InvoiceDAO(JdbcTemplate jdbcTemplate) {
@@ -24,5 +28,18 @@ public class InvoiceDAO extends BaseDAO<Invoice> {
     @Override
     public void upload() {
         set(getJdbcTemplate().query("SELECT * FROM invoice", new BeanPropertyRowMapper<>(Invoice.class)));
+    }
+
+    @Override
+    public List<String> getFields() {
+        List<String> result = new ArrayList<>();
+        Field[] fields = Invoice.class.getDeclaredFields();
+
+        result.add(Invoice.class.getSimpleName());
+        for (Field f : fields) {
+            result.add(f.getName());
+        }
+
+        return result;
     }
 }

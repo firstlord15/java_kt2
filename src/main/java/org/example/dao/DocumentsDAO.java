@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -27,13 +28,21 @@ public class DocumentsDAO {
         this.paymentInvoiceDAO = paymentInvoiceDAO;
     }
 
+    public List<List<String>> getAllFields() {
+        List<List<String>> fields = new ArrayList<>();
+
+        fields.add(invoiceDAO.getFields());
+        fields.add(orderDAO.getFields());
+        fields.add(paymentDAO.getFields());
+        fields.add(paymentInvoiceDAO.getFields());
+
+        return fields;
+    }
+
     public List<List<Document>> getDocList(){
         List<List<Document>> documents = new ArrayList<>();
 
         List<Invoice> invoices = invoiceDAO.getAll();
-        List<Order> orders = orderDAO.getAll();
-        List<Payment> payments = paymentDAO.getAll();
-        List<PaymentInvoice> paymentInvoices = paymentInvoiceDAO.getAll();
 
         for (Invoice invoice : invoices) {
             List<Document> documentList = new ArrayList<>();
@@ -70,14 +79,12 @@ public class DocumentsDAO {
         documents.add(order);
         documents.add(payment);
         documents.add(paymentInvoice);
-
         return documents;
     }
 
     public List<List<Document>> index() {
         return getDocList();
     }
-
     public List<Document> show(int id) {
         return getDocList(id);
     }
