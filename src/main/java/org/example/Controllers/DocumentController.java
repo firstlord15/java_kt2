@@ -1,7 +1,7 @@
 package org.example.Controllers;
 
 import org.example.Models.Document;
-import org.example.dao.DocumentDAO;
+import org.example.dao.DocumentsDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,16 +15,16 @@ import java.util.List;
 @Controller
 @RequestMapping("/document")
 public class DocumentController {
-    private final DocumentDAO documentDAO;
+    private final DocumentsDAO documentDAO;
 
     @Autowired
-    public DocumentController(DocumentDAO documentDAO) {
+    public DocumentController(DocumentsDAO documentDAO) {
         this.documentDAO = documentDAO;
     }
 
     @GetMapping()
     public String index(Model model) {
-        model.addAttribute("Alldocuments", documentDAO.index());
+        model.addAttribute("AllDocuments", documentDAO.index());
         return "document/index";
     }
 

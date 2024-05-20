@@ -19,7 +19,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="document : ${Alldocuments}">
+                <tr th:each="document : ${AllDocuments}">
                     <td th:text="${document[0].getId()}"></td>
                     <td th:text="${document[0].getNumber()}"></td>
                     <td><a th:href="@{/document/{id}(id=${document[0].getId()})}">Link to document</a></td>

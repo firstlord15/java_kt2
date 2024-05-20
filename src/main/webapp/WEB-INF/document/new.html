@@ -9,10 +9,11 @@
 <body>
     <form th:method="POST" th:action="@{/document}" th:object="${documents}">
         <div th:each="document : ${documents}">
-            <label for="name">Enter age: </label>
-            <input type="text" th:field="*{document.get(0).getId()}" id="age"/>
-            <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</div>
-            <br/>
+            <div th:each="element : ${document.displayInfo()}">
+                <label th:text="Enter + ${element.split(':')[0]}" for="name"></label>
+                <input type="text" th:field="*{${element.split(':')[0]}}" id="age"/>
+                <br/>
+            </div>
         </div>
     </form>
 </body>
