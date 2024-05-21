@@ -5,6 +5,8 @@ package org.example.Models;
 //import jakarta.persistence.GenerationType;
 //import jakarta.persistence.Id;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +70,12 @@ public class Payment implements Document {
     @Override
     public void setNumber(int paymentNumber) {
         this.paymentNumber = paymentNumber;
+    }
+
+    @Override
+    public void save(JdbcTemplate jdbcTemplate) {
+        String sql = "INSERT INTO payment (id, number, date, paymentname) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, id, paymentNumber, paymentDate, paymentName);
     }
 
     @Override

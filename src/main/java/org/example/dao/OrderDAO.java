@@ -1,6 +1,5 @@
 package org.example.dao;
 
-import org.example.Models.Invoice;
 import org.example.Models.Order;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

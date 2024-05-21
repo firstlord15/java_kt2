@@ -1,5 +1,6 @@
 package org.example.Models;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 
 public interface Document {
@@ -14,4 +15,6 @@ public interface Document {
 
     // Метод для вывода информации о документе
     List<String> displayInfo();
+
+    void save(JdbcTemplate jdbcTemplate);
 }

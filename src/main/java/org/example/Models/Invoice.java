@@ -4,6 +4,8 @@ package org.example.Models;
 //import jakarta.persistence.GenerationType;
 //import jakarta.persistence.Id;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,5 +92,11 @@ public class Invoice implements Document {
         list.add("address: "+ getAddress());
 
         return list;
+    }
+
+    @Override
+    public void save(JdbcTemplate jdbcTemplate) {
+        String sql = "INSERT INTO invoice (id, number, date, clientname, address) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, id, invoiceNumber, invoiceDate, clientName, address);
     }
 }

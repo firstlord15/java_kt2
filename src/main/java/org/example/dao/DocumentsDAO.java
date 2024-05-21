@@ -82,6 +82,13 @@ public class DocumentsDAO {
         return documents;
     }
 
+    public void save(List<Document> document){
+        for (Document doc : document) {
+
+            jdbcTemplate.update("INSERT INTO ? VALUES()";
+        }
+    }
+
     public List<List<Document>> index() {
         return getDocList();
     }

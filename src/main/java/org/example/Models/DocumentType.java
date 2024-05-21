@@ -1,10 +1,10 @@
 package org.example.Models;
 
 public enum DocumentType {
-    ORDER("Order"),
-    PAYMENT_INVOICE("PaymentInvoice"),
-    PAYMENT("Payment"),
-    INVOICE("Invoice");
+    ORDER("order"),
+    PAYMENT_INVOICE("paymentInvoice"),
+    PAYMENT("payment"),
+    INVOICE("invoice");
 
     private final String className;
 

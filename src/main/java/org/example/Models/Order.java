@@ -1,10 +1,6 @@
-
 package org.example.Models;
 
-//import jakarta.persistence.Entity;
-//import jakarta.persistence.GeneratedValue;
-//import jakarta.persistence.GenerationType;
-//import jakarta.persistence.Id;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,13 +11,13 @@ public class Order implements Document {
     private int orderNumber;
     private LocalDateTime orderDate;
     private String buyerName;
-    private ArrayList<String> products;
+    private List<String> products;
 
     public Order() {
         products = new ArrayList<>();
     }
 
-    public Order(int id, int orderNumber, LocalDateTime orderDate, String buyerName, ArrayList<String> products) {
+    public Order(int id, int orderNumber, LocalDateTime orderDate, String buyerName, List<String> products) {
         this.id = id;
         this.orderNumber = orderNumber;
         this.orderDate = orderDate;
@@ -70,7 +66,7 @@ public class Order implements Document {
         this.buyerName = buyerName;
     }
 
-    public ArrayList<String> getProducts() {
+    public List<String> getProducts() {
         if (products == null){
             products = new ArrayList<>();
         }
@@ -80,6 +76,15 @@ public class Order implements Document {
 
     public void setProducts(ArrayList<String> products) {
         this.products = products;
+    }
+
+    @Override
+    public void save(JdbcTemplate jdbcTemplate) {
+        String sqlMain = "INSERT INTO \"order\" (number, date, buyername) VALUES (?, ?, ?)";
+        String sqlSlave = "INSERT INTO products (name, price) VALUES (?, ?)";
+
+        jdbcTemplate.update(sqlMain, id, orderNumber, orderDate, buyerName);
+        jdbcTemplate.update(sqlSlave, id, products.get(0).split(":")[0], products.get(0).split(":")[1]);
     }
 
     @Override
