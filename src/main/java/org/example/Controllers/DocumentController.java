@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/document")
 public class DocumentController {
@@ -38,11 +40,11 @@ public class DocumentController {
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("person") @Valid List<Document> documents, BindingResult bindingResult) {
+    public String create(@ModelAttribute("documentList") @Valid List<Document> documentsList, BindingResult bindingResult) {
         if(bindingResult.hasErrors())
-            return "people/new";
+            return "document/new";
 
-        DocumentsDAO.save(documents);
-        return "redirect:/people";
+        documentDAO.save(documentsList);
+        return "redirect:/document";
     }
 }

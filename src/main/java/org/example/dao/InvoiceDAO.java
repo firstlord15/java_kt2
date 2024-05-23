@@ -6,6 +6,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,13 +34,20 @@ public class InvoiceDAO extends BaseDAO<Invoice> {
     }
 
     @Override
+    public void save(JdbcTemplate jdbcTemplate, Invoice invoice) {
+        String sql = "INSERT INTO invoice (id, number, date, clientname, address) VALUES (?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, invoice.getId(), invoice.getNumber(), LocalDateTime.now(), invoice.getClientName(), invoice.getAddress());
+    }
+
+    @Override
     public List<String> getFields() {
         List<String> result = new ArrayList<>();
         Field[] fields = Invoice.class.getDeclaredFields();
 
         result.add(Invoice.class.getSimpleName());
-        for (Field f : fields) {
-            result.add(f.getName());
+        for (int i = 0; i < fields.length; i++) {
+            Field f = fields[i];
+            if (i != 2) result.add(f.getName());
         }
 
         return result;

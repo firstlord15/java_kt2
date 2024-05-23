@@ -82,12 +82,6 @@ public class PaymentInvoice implements Document {
     }
 
     @Override
-    public void save(JdbcTemplate jdbcTemplate) {
-        String sql = "INSERT INTO paymentinvoice (id, number, date, customername, comments) VALUES (?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, id, paymentInvoiceNumber, paymentInvoiceDate, customerName, comments);
-    }
-
-    @Override
     public List<String> displayInfo() {
         List<String> list = new ArrayList<>();
         list.add("id: "+ getId());

@@ -73,12 +73,6 @@ public class Payment implements Document {
     }
 
     @Override
-    public void save(JdbcTemplate jdbcTemplate) {
-        String sql = "INSERT INTO payment (id, number, date, paymentname) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, id, paymentNumber, paymentDate, paymentName);
-    }
-
-    @Override
     public List<String> displayInfo() {
 
         List<String> list = new ArrayList<>();

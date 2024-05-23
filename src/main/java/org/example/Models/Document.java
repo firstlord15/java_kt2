@@ -15,6 +15,4 @@ public interface Document {
 
     // Метод для вывода информации о документе
     List<String> displayInfo();
-
-    void save(JdbcTemplate jdbcTemplate);
 }

@@ -1,7 +1,5 @@
 package org.example.Models;
 
-import org.springframework.jdbc.core.JdbcTemplate;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,15 +74,6 @@ public class Order implements Document {
 
     public void setProducts(ArrayList<String> products) {
         this.products = products;
-    }
-
-    @Override
-    public void save(JdbcTemplate jdbcTemplate) {
-        String sqlMain = "INSERT INTO \"order\" (number, date, buyername) VALUES (?, ?, ?)";
-        String sqlSlave = "INSERT INTO products (name, price) VALUES (?, ?)";
-
-        jdbcTemplate.update(sqlMain, id, orderNumber, orderDate, buyerName);
-        jdbcTemplate.update(sqlSlave, id, products.get(0).split(":")[0], products.get(0).split(":")[1]);
     }
 
     @Override

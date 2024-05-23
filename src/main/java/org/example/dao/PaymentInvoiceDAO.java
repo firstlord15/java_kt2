@@ -1,12 +1,12 @@
 package org.example.dao;
 
-import org.example.Models.Invoice;
 import org.example.Models.PaymentInvoice;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,13 +32,23 @@ public class PaymentInvoiceDAO extends BaseDAO<PaymentInvoice> {
     }
 
     @Override
+    public void save(JdbcTemplate jdbcTemplate, PaymentInvoice paymentInvoice) {
+        String sql = "INSERT INTO paymentinvoice (id, number, date, customername, comments) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(
+                sql, paymentInvoice.getNumber(), LocalDateTime.now(),
+                paymentInvoice.getCustomerName(), paymentInvoice.getComments()
+        );
+    }
+
+    @Override
     public List<String> getFields() {
         List<String> result = new ArrayList<>();
         Field[] fields = PaymentInvoice.class.getDeclaredFields();
 
         result.add(PaymentInvoice.class.getSimpleName());
-        for (Field f : fields) {
-            result.add(f.getName());
+        for (int i = 0; i < fields.length; i++) {
+            Field f = fields[i];
+            if (i != 2) result.add(f.getName());
         }
 
         return result;

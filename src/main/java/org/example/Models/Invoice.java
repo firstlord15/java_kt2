@@ -93,10 +93,4 @@ public class Invoice implements Document {
 
         return list;
     }
-
-    @Override
-    public void save(JdbcTemplate jdbcTemplate) {
-        String sql = "INSERT INTO invoice (id, number, date, clientname, address) VALUES (?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, id, invoiceNumber, invoiceDate, clientName, address);
-    }
 }

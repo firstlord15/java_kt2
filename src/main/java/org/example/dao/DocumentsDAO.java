@@ -83,10 +83,10 @@ public class DocumentsDAO {
     }
 
     public void save(List<Document> document){
-        for (Document doc : document) {
-
-            jdbcTemplate.update("INSERT INTO ? VALUES()";
-        }
+        invoiceDAO.save(jdbcTemplate, (Invoice) document.get(0));
+        orderDAO.save(jdbcTemplate, (Order) document.get(1));
+        paymentDAO.save(jdbcTemplate, (Payment) document.get(2));
+        paymentInvoiceDAO.save(jdbcTemplate, (PaymentInvoice) document.get(3));
     }
 
     public List<List<Document>> index() {

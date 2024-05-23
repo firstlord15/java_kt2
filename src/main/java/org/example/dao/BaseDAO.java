@@ -62,6 +62,7 @@ public abstract class BaseDAO<T> {
 
     public abstract int getId(T entity);
     public abstract int getNumber(T entity);
+    public abstract void save (JdbcTemplate jdbcTemplate, T entity);
     public abstract List<String> getFields();
     public abstract void upload();
 }
