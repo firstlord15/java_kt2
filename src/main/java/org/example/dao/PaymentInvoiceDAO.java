@@ -12,8 +12,11 @@ import java.util.List;
 
 @Component
 public class PaymentInvoiceDAO extends BaseDAO<PaymentInvoice> {
+    private PaymentInvoice paymentInvoice;
+
     public PaymentInvoiceDAO(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
+        this.paymentInvoice = new PaymentInvoice();
     }
 
     @Override
@@ -52,5 +55,15 @@ public class PaymentInvoiceDAO extends BaseDAO<PaymentInvoice> {
         }
 
         return result;
+    }
+
+    @Override
+    public PaymentInvoice getDoc() {
+        return paymentInvoice;
+    }
+
+    @Override
+    public void setDoc(PaymentInvoice entity) {
+        paymentInvoice = entity;
     }
 }

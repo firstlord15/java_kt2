@@ -12,8 +12,10 @@ import java.util.List;
 
 @Component
 public class OrderDAO extends BaseDAO<Order> {
+    private Order order;
     public OrderDAO(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
+        this.order = new Order();
     }
 
     @Override
@@ -57,5 +59,15 @@ public class OrderDAO extends BaseDAO<Order> {
         }
 
         return result;
+    }
+
+    @Override
+    public Order getDoc() {
+        return order;
+    }
+
+    @Override
+    public void setDoc(Order entity) {
+        order = entity;
     }
 }

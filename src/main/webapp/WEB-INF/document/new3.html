@@ -10,10 +10,10 @@
             <h1 style="text-align: center" class="mt-5 mb-5"><kbd style="padding: 15px; border-radius: 20px;">New Document</kbd></h1>
             <form th:method="POST" th:action="@{/create}" th:object="${documentList}">
                 <div class="row">
-                    <div class="col-3" th:each="field, filIndex : ${NamesField}">
-                        <h1 style="color:#ffffff;"><kbd th:text="${field.get(0)}"></kbd></h1>
-                        <div th:each="field, fieldIndex : ${field}" class="form-floating mb-3">
-                            <input th:if="${fieldIndex.index > 1}" type="text" class="form-control" id="floatingInput" placeholder="example">
+                    <div class="col-3" th:each="document, docIndex : ${documents}">
+                        <h1 style="color:#ffffff;"><kbd th:text="${document.getType()}"></kbd></h1>
+                        <div th:each="field, fieldIndex : ${document}" class="form-floating mb-3">
+                            <input th:field="*{__${field}__}" th:if="${fieldIndex.index > 1}" type="text" class="form-control" id="floatingInput" placeholder="example">
                             <label th:if="${fieldIndex.index > 1}" for="floatingInput" th:text="${field}"></label>
                         </div>
                     </div>

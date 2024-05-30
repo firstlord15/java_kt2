@@ -6,16 +6,17 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class InvoiceDAO extends BaseDAO<Invoice> {
+    private Invoice invoice;
+
     public InvoiceDAO(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
+        invoice = new Invoice();
     }
 
     @Override
@@ -51,5 +52,15 @@ public class InvoiceDAO extends BaseDAO<Invoice> {
         }
 
         return result;
+    }
+
+    @Override
+    public Invoice getDoc() {
+        return invoice;
+    }
+
+    @Override
+    public void setDoc(Invoice entity) {
+        invoice = entity;
     }
 }

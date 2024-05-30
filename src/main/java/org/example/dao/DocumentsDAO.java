@@ -30,13 +30,22 @@ public class DocumentsDAO {
 
     public List<List<String>> getAllFields() {
         List<List<String>> fields = new ArrayList<>();
-
         fields.add(invoiceDAO.getFields());
         fields.add(orderDAO.getFields());
         fields.add(paymentDAO.getFields());
         fields.add(paymentInvoiceDAO.getFields());
 
         return fields;
+    }
+
+    public List<Document> getAllDocuments() {
+        List<Document> documents = new ArrayList<>();
+        documents.add(invoiceDAO.getDoc());
+        documents.add(orderDAO.getDoc());
+        documents.add(paymentDAO.getDoc());
+        documents.add(paymentInvoiceDAO.getDoc());
+
+        return documents;
     }
 
     public List<List<Document>> getDocList(){

@@ -60,6 +60,8 @@ public abstract class BaseDAO<T> {
         this.entities = entities;
     }
 
+    public abstract T getDoc();
+    public abstract void setDoc(T entity);
     public abstract int getId(T entity);
     public abstract int getNumber(T entity);
     public abstract void save (JdbcTemplate jdbcTemplate, T entity);

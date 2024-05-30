@@ -1,6 +1,5 @@
 package org.example.dao;
 
-import org.example.Models.Invoice;
 import org.example.Models.Payment;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,8 +12,11 @@ import java.util.List;
 
 @Component
 public class PaymentDAO extends BaseDAO<Payment> {
+    private Payment payment;
+
     public PaymentDAO(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
+        payment = new Payment();
     }
 
     @Override
@@ -50,5 +52,15 @@ public class PaymentDAO extends BaseDAO<Payment> {
         }
 
         return result;
+    }
+
+    @Override
+    public Payment getDoc() {
+        return payment;
+    }
+
+    @Override
+    public void setDoc(Payment entity) {
+        payment = entity;
     }
 }
