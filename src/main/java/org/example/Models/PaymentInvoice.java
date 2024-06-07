@@ -59,7 +59,7 @@ public class PaymentInvoice implements Document {
         return paymentInvoiceDate;
     }
 
-    public void setInvoiceDate(LocalDateTime invoiceDate) {
+    public void setPaymentInvoiceDate(LocalDateTime invoiceDate) {
         this.paymentInvoiceDate = invoiceDate;
     }
 

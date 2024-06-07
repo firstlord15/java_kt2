@@ -7,18 +7,21 @@
     </head>
     <body style="background: #141414">
         <div class="container">
-            <h1 style="text-align: center" class="mt-5 mb-5"><kbd style="padding: 15px; border-radius: 20px;">New Document</kbd></h1>
-            <form th:method="POST" th:action="@{/create}" th:object="${documentList}">
+            <h1 style="text-align: center" class="mt-5 mb-5">
+                <kbd th:text="${payment.getType()}" style="padding: 15px; border-radius: 20px;"></kbd>
+            </h1>
+            <form action="#" th:action="@{/document/createPayment}" th:method="POST" th:object="${payment}">
                 <div class="row">
-                    <div class="col-3" th:each="field, filIndex : ${NamesField}">
-                        <h1 style="color:#ffffff;"><kbd th:text="${field.get(0)}"></kbd></h1>
-                        <div th:each="field, fieldIndex : ${field}" class="form-floating mb-3">
-                            <input th:if="${fieldIndex.index > 1}" type="text" class="form-control" id="floatingInput" placeholder="example">
-                            <label th:if="${fieldIndex.index > 1}" for="floatingInput" th:text="${field}"></label>
+                    <div style="width: 500px; margin: 0 auto">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" th:field="*{paymentName}" id="paymentName" placeholder="example">
+                            <label for="paymentName" th:text="paymentName"></label>
                         </div>
+                        <div style="color:red" th:if="${#fields.hasErrors('paymentName')}" th:errors="*{paymentName}">Name error</div>
+                        <br/>
+                        <input style="padding: 15px 80px" type="submit" value="Create!" class="mt-3 btn btn-outline-success"/>
                     </div>
                 </div>
-                <input style="padding: 15px 80px" type="submit" value="Create!" class="mt-3 btn btn-outline-success"/>
             </form>
         </div>
     </body>

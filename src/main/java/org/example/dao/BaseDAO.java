@@ -4,14 +4,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.logging.Logger;
 
 @Component
 public abstract class BaseDAO<T> {
     private final JdbcTemplate jdbcTemplate;
     private List<T> entities;
+    private final Logger logger = Logger.getLogger(BaseDAO.class.getName());
 
     @Autowired
     public BaseDAO(JdbcTemplate jdbcTemplate) {
@@ -24,47 +26,41 @@ public abstract class BaseDAO<T> {
     }
 
     public List<T> getAll() {
-        if (entities.isEmpty()) { upload(); }
+        if (entities.isEmpty())
+            upload();
+
         return entities;
     }
 
-    public T getById(int id) {
-        T result = null;
+    public Optional<T> getById(int id) {
+        if (entities.isEmpty())
+            upload();
 
-        if (entities.isEmpty()) { upload(); }
-        for (T entity : entities) {
-            if (getId(entity) == id) {
-                result = entity;
-                break;
-            }
-        }
-
-        return result;
+        return entities.stream().filter(entity -> getId(entity) == id).findFirst();
     }
 
-    public T getByNumber(int number) {
-        T result = null;
+    public Optional<T> getByNumber(int number) {
+        if (entities.isEmpty())
+            upload();
 
-        if (entities.isEmpty()) { upload(); }
-        for (T entity : entities) {
-            if (getNumber(entity) == number) {
-                result = entity;
-                break;
-            }
-        }
-
-        return result;
+        return entities.stream().filter(entity -> getNumber(entity) == number).findFirst();
     }
 
-    public void set(List<T> entities) {
+    public void setEntities(List<T> entities) {
         this.entities = entities;
     }
 
+    public void clearEntities() {
+        this.entities.clear();
+    }
+
     public abstract T getDoc();
+//    public abstract T getDocDB(JdbcTemplate jdbcTemplate, int locator);
+    public abstract T findById(int locator);
+    public abstract T findByNumber(int locator);
     public abstract void setDoc(T entity);
     public abstract int getId(T entity);
     public abstract int getNumber(T entity);
-    public abstract void save (JdbcTemplate jdbcTemplate, T entity);
-    public abstract List<String> getFields();
+    public abstract void save(JdbcTemplate jdbcTemplate, T entity);
     public abstract void upload();
 }

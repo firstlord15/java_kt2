@@ -5,11 +5,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Field;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
 public class InvoiceDAO extends BaseDAO<Invoice> {
     private Invoice invoice;
@@ -31,27 +26,25 @@ public class InvoiceDAO extends BaseDAO<Invoice> {
 
     @Override
     public void upload() {
-        set(getJdbcTemplate().query("SELECT * FROM invoice", new BeanPropertyRowMapper<>(Invoice.class)));
+        setEntities(getJdbcTemplate().query("SELECT * FROM invoice", new BeanPropertyRowMapper<>(Invoice.class)));
     }
 
     @Override
     public void save(JdbcTemplate jdbcTemplate, Invoice invoice) {
-        String sql = "INSERT INTO invoice (id, number, date, clientname, address) VALUES (?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, invoice.getId(), invoice.getNumber(), LocalDateTime.now(), invoice.getClientName(), invoice.getAddress());
+        String sql = "INSERT INTO invoice (number, date, clientname, address) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, invoice.getNumber(), invoice.getInvoiceDate(), invoice.getClientName(), invoice.getAddress());
     }
 
     @Override
-    public List<String> getFields() {
-        List<String> result = new ArrayList<>();
-        Field[] fields = Invoice.class.getDeclaredFields();
+    public Invoice findById(int id) {
+        return getJdbcTemplate().query("SELECT * FROM invoice WHERE id=?", new Object[]{id}, new BeanPropertyRowMapper<>(Invoice.class))
+                .stream().findAny().orElse(null);
+    }
 
-        result.add(Invoice.class.getSimpleName());
-        for (int i = 0; i < fields.length; i++) {
-            Field f = fields[i];
-            if (i != 2) result.add(f.getName());
-        }
-
-        return result;
+    @Override
+    public Invoice findByNumber(int number) {
+        return getJdbcTemplate().query("SELECT * FROM invoice WHERE number=?", new Object[]{number}, new BeanPropertyRowMapper<>(Invoice.class))
+                .stream().findAny().orElse(null);
     }
 
     @Override
