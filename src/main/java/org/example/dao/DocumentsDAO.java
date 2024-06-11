@@ -61,6 +61,21 @@ public class DocumentsDAO {
         return documents;
     }
 
+    public Document getDocById(int id, DocumentType documentType) {
+        switch (documentType) {
+            case INVOICE:
+                return invoiceDAO.findById(id);
+            case ORDER:
+                return orderDAO.findById(id);
+            case PAYMENT:
+                return paymentDAO.findById(id);
+            case PAYMENT_INVOICE:
+                return paymentInvoiceDAO.findById(id);
+        }
+
+        return null;
+    }
+
     public void save(Document[] documents) {
         invoiceDAO.save(jdbcTemplate, (Invoice) documents[0]);
         orderDAO.save(jdbcTemplate, (Order) documents[1]);
@@ -75,5 +90,14 @@ public class DocumentsDAO {
     }
     public List<Document> show(int id) {
         return getDocList(id);
+    }
+
+    public boolean existsByNumber(int number) {
+        Integer count = jdbcTemplate.queryForObject(
+                "SELECT COUNT(*) FROM invoice WHERE number = ?",
+                new Object[]{number},
+                Integer.class
+        );
+        return count != null && count > 0;
     }
 }

@@ -37,7 +37,9 @@ public class InvoiceDAO extends BaseDAO<Invoice> {
 
     @Override
     public Invoice findById(int id) {
-        return getJdbcTemplate().query("SELECT * FROM invoice WHERE id=?", new Object[]{id}, new BeanPropertyRowMapper<>(Invoice.class))
+        return getJdbcTemplate().query("SELECT * FROM invoice WHERE id=?",
+                new Object[]{id},
+                new BeanPropertyRowMapper<>(Invoice.class))
                 .stream().findAny().orElse(null);
     }
 

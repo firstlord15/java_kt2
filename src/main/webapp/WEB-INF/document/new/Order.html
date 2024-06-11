@@ -1,4 +1,4 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+newInvoice.html<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,16 +8,22 @@
     <body style="background: #141414">
         <div class="container">
             <h1 style="text-align: center" class="mt-5 mb-5">
-                <kbd th:text="${payment.getType()}" style="padding: 15px; border-radius: 20px;"></kbd>
+                <kbd th:text="${order.getType()}" style="padding: 15px; border-radius: 20px;"></kbd>
             </h1>
-            <form action="#" th:action="@{/document/createPayment}" th:method="POST" th:object="${payment}">
+            <form action="#" th:action="@{/document/createOrder}" th:method="POST" th:object="${order}">
                 <div class="row">
                     <div style="width: 500px; margin: 0 auto">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" th:field="*{paymentName}" id="paymentName" placeholder="example">
-                            <label for="paymentName" th:text="paymentName"></label>
+                            <input type="text" class="form-control" th:field="*{buyerName}" id="buyerName" placeholder="example" required>
+                            <label for="buyerName" th:text="buyerName"></label>
                         </div>
-                        <div style="color:red" th:if="${#fields.hasErrors('paymentName')}" th:errors="*{paymentName}">Name error</div>
+                        <div style="color:red" th:if="${#fields.hasErrors('buyerName')}" th:errors="*{buyerName}">Name error</div>
+                        <br/>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" th:field="*{products}" id="products" placeholder="example" required>
+                            <label for="products" th:text="products"></label>
+                        </div>
+                        <div style="color:red" th:if="${#fields.hasErrors('products')}" th:errors="*{products}">Products error</div>
                         <br/>
                         <input style="padding: 15px 80px" type="submit" value="Create!" class="mt-3 btn btn-outline-success"/>
                     </div>

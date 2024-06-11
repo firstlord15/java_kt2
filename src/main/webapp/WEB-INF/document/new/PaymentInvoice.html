@@ -1,4 +1,4 @@
-newInvoice.html<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,24 +8,24 @@ newInvoice.html<html lang="en" xmlns:th="http://www.thymeleaf.org">
     <body style="background: #141414">
         <div class="container">
             <h1 style="text-align: center" class="mt-5 mb-5">
-                <kbd th:text="${order.getType()}" style="padding: 15px; border-radius: 20px;"></kbd>
+                <kbd th:text="${paymentInvoice.getType()}" style="padding: 15px; border-radius: 20px;"></kbd>
             </h1>
-            <form action="#" th:action="@{/document/createOrder}" th:method="POST" th:object="${order}">
+            <form action="#" th:action="@{/document/createPaymentInvoice}" th:method="POST" th:object="${paymentInvoice}">
                 <div class="row">
                     <div style="width: 500px; margin: 0 auto">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" th:field="*{buyerName}" id="buyerName" placeholder="example">
-                            <label for="buyerName" th:text="buyerName"></label>
+                            <input type="text" class="form-control" th:field="*{customerName}" id="customerName" placeholder="example" required>
+                            <label for="customerName" th:text="clientName"></label>
                         </div>
-                        <div style="color:red" th:if="${#fields.hasErrors('buyerName')}" th:errors="*{buyerName}">Name error</div>
+                        <div style="color:red" th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}">Name error</div>
                         <br/>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" th:field="*{products}" id="products" placeholder="example">
-                            <label for="products" th:text="products"></label>
+                            <input type="text" class="form-control" th:field="*{comments}" id="comments" placeholder="example" required>
+                            <label for="comments" th:text="comments"></label>
                         </div>
-                        <div style="color:red" th:if="${#fields.hasErrors('products')}" th:errors="*{products}">Products error</div>
+                        <div style="color:red" th:if="${#fields.hasErrors('comments')}" th:errors="*{comments}">Comments error</div>
                         <br/>
-                        <input style="padding: 15px 80px" type="submit" value="Create!" class="mt-3 btn btn-outline-success"/>
+                        <input style="padding: 15px 80px" class="mt-3 btn btn-outline-success" type="submit" value="Create!" />
                     </div>
                 </div>
             </form>
