@@ -15,17 +15,17 @@ newInvoice.html<html lang="en" xmlns:th="http://www.thymeleaf.org">
                     <div style="width: 500px; margin: 0 auto">
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" th:field="*{buyerName}" id="buyerName" placeholder="example" required>
-                            <label for="buyerName" th:text="buyerName"></label>
+                            <label for="buyerName" th:text="'BuyerName'"></label>
                         </div>
                         <div style="color:red" th:if="${#fields.hasErrors('buyerName')}" th:errors="*{buyerName}">Name error</div>
                         <br/>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" th:field="*{products}" id="products" placeholder="example" required>
-                            <label for="products" th:text="products"></label>
+                            <label for="products" th:text="'Products'"></label>
                         </div>
                         <div style="color:red" th:if="${#fields.hasErrors('products')}" th:errors="*{products}">Products error</div>
                         <br/>
-                        <input style="padding: 15px 80px" type="submit" value="Create!" class="mt-3 btn btn-outline-success"/>
+                        <input style="padding: 15px 80px" type="submit" value="Update" class="mt-3 btn btn-outline-success"/>
                     </div>
                 </div>
             </form>

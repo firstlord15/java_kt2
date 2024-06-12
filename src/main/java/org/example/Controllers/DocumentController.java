@@ -42,11 +42,7 @@ public class DocumentController {
     ////////////////////////////////////// create new document
     @GetMapping("/newInvoice")
     public String getNewInvoice(@ModelAttribute("invoice") Invoice invoice, Model model) {
-        if (model.containsAttribute("invoiceExists")) {
-            model.addAttribute("isInvoiceExists", true);
-        } else {
-            model.addAttribute("isInvoiceExists", false);
-        }
+        model.addAttribute("isInvoiceExists", model.containsAttribute("invoiceExists"));
         return "document/new/Invoice";
     }
 
@@ -74,12 +70,14 @@ public class DocumentController {
     }
 
     @PostMapping("/createOrder")
-    public String postEditOrder(@ModelAttribute("orderObj") @Valid Order orderObj, BindingResult bindingResult) {
+    public String postNewOrder(@ModelAttribute("orderObj") @Valid Order orderObj, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return "document/new/Order";
 
         orderObj.setOrderDate(LocalDateTime.now());
-        if (number != -1 && orderObj.getNumber() != number)
+        if (number != -1 && orderObj.getNumber() != number){
             orderObj.setNumber(this.number);
+            orderObj.setOrderDate(LocalDateTime.now());
+        }
 
         documentsList[1] = orderObj;
         return "redirect:/document/newPayment";
@@ -91,12 +89,13 @@ public class DocumentController {
     }
 
     @PostMapping("/createPayment")
-    public String postEditPayment(@ModelAttribute("paymentObj") @Valid Payment paymentObj, BindingResult bindingResult) {
+    public String postNewPayment(@ModelAttribute("paymentObj") @Valid Payment paymentObj, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) return "document/new/Payment";
 
         paymentObj.setPaymentDate(LocalDateTime.now());
         if (number != -1 && paymentObj.getNumber() != number) {
             paymentObj.setNumber(this.number);
+            paymentObj.setPaymentDate(LocalDateTime.now());
         }
 
         documentsList[2] = paymentObj;
@@ -109,12 +108,13 @@ public class DocumentController {
     }
 
     @PostMapping("/createPaymentInvoice")
-    public String postEditPaymentInvoice(@ModelAttribute("paymentInvoiceObj") @Valid PaymentInvoice paymentInvoiceObj, BindingResult bindingResult) {
+    public String postNewPaymentInvoice(@ModelAttribute("paymentInvoiceObj") @Valid PaymentInvoice paymentInvoiceObj, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) return "document/new/PaymentInvoice";
 
         paymentInvoiceObj.setPaymentInvoiceDate(LocalDateTime.now());
         if (number != -1 && paymentInvoiceObj.getNumber() != number) {
             paymentInvoiceObj.setNumber(this.number);
+            paymentInvoiceObj.setPaymentInvoiceDate(LocalDateTime.now());
         }
 
         documentsList[3] = paymentInvoiceObj;
@@ -123,27 +123,54 @@ public class DocumentController {
     }
 
     ////////////////////////////////////// edit
-    @GetMapping("/{id}/editInvoice")
-    public String getEditInvoice(@PathVariable("id") int id, @ModelAttribute("invoice") Invoice invoice, Model model) {
-        if (model.containsAttribute("invoiceExists")) {
-            model.addAttribute("isInvoiceExists", true);
-        } else {
-            model.addAttribute("isInvoiceExists", false);
-        }
+    @GetMapping("/{id}/getEditInvoice")
+    public String getEditInvoice(@PathVariable("id") int id, Model model) {
+        Invoice invoice = (Invoice) documentDAO.getDocById(id, DocumentType.INVOICE);
+        model.addAttribute("invoice", invoice);
+        model.addAttribute("isEdit", true);
+        model.addAttribute("isInvoiceExists", model.containsAttribute("invoiceExists"));
+
         return "document/new/Invoice";
     }
 
-    @PostMapping("/{id}/createInvoice")
-    public String postEditInvoice(@PathVariable("id") int id, Invoice invoice, RedirectAttributes redirectAttributes) {
-        Invoice invoiceObj = (Invoice) documentDAO.getDocById(id, DocumentType.INVOICE);
-        this.number = invoice.getNumber();
+    @PostMapping("/{id}/postEditInvoice")
+    public String postEditInvoice(@PathVariable("id") int id, Invoice invoiceObj, RedirectAttributes redirectAttributes) {
+        if (documentDAO.existsByNumber(invoiceObj.getNumber())) {
+            redirectAttributes.addFlashAttribute("invoiceExists", invoiceObj.getNumber());
+            return String.format("redirect:/document/%d/getEditInvoice", id);
+        }
+
+        this.number = invoiceObj.getNumber();
 
         if (documentDAO.existsByNumber(number)) {
             redirectAttributes.addFlashAttribute("invoiceExists", this.number);
-            return "redirect:/document/newInvoice";
+            return String.format("redirect:/document/%d/getEditInvoice", id);
         }
 
-        documentsList[0] = invoice;
-        return "redirect:/document/newOrder";
+        invoiceObj.setInvoiceDate(LocalDateTime.now());
+        System.out.println(invoiceObj.displayInfo());
+//        documentsList[0] = invoiceObj;
+        return String.format("redirect:/document/%d/getEditOrder", id);
+    }
+
+    @GetMapping("/{id}/getEditOrder")
+    public String getEditOrder(@PathVariable("id") int id, Model model) {
+        Order order = (Order) documentDAO.getDocById(id, DocumentType.ORDER);
+        model.addAttribute("order", order);
+        model.addAttribute("isEdit", true);
+        return "document/new/Order";
+    }
+
+    @PostMapping("/{id}/postEditOrder")
+    public String postEditOrder(@PathVariable("id") int id, @ModelAttribute("orderObj") @Valid Order orderObj) {
+        orderObj.setOrderDate(LocalDateTime.now());
+        if (number != -1 && orderObj.getNumber() != number) {
+            orderObj.setNumber(this.number);
+            orderObj.setOrderDate(LocalDateTime.now());
+        }
+
+//        documentsList[1] = orderObj;
+        System.out.println(orderObj.displayInfo());
+        return "redirect:/document";
     }
 }
