@@ -3,7 +3,6 @@ package org.example.Controllers;
 import jakarta.validation.Valid;
 import org.example.Models.*;
 import org.example.dao.DocumentsDAO;
-import org.example.dao.InvoiceDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +20,7 @@ public class DocumentController {
     private int number;
 
     @Autowired
-    public DocumentController(DocumentsDAO documentDAO, InvoiceDAO invoiceDAO) {
+    public DocumentController(DocumentsDAO documentDAO) {
         this.documentDAO = documentDAO;
         this.documentsList = new Document[4];
         this.number = -1;
@@ -51,7 +50,6 @@ public class DocumentController {
         if (bindingResult.hasErrors()) {
             return "document/new/Invoice";
         }
-
         invoiceObj.setInvoiceDate(LocalDateTime.now());
         this.number = invoiceObj.getNumber();
 
@@ -72,12 +70,10 @@ public class DocumentController {
     @PostMapping("/createOrder")
     public String postNewOrder(@ModelAttribute("orderObj") @Valid Order orderObj, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) return "document/new/Order";
-
-        orderObj.setOrderDate(LocalDateTime.now());
         if (number != -1 && orderObj.getNumber() != number){
             orderObj.setNumber(this.number);
-            orderObj.setOrderDate(LocalDateTime.now());
         }
+        orderObj.setOrderDate(LocalDateTime.now());
 
         documentsList[1] = orderObj;
         return "redirect:/document/newPayment";
@@ -92,12 +88,10 @@ public class DocumentController {
     public String postNewPayment(@ModelAttribute("paymentObj") @Valid Payment paymentObj, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) return "document/new/Payment";
 
-        paymentObj.setPaymentDate(LocalDateTime.now());
         if (number != -1 && paymentObj.getNumber() != number) {
             paymentObj.setNumber(this.number);
-            paymentObj.setPaymentDate(LocalDateTime.now());
         }
-
+        paymentObj.setPaymentDate(LocalDateTime.now());
         documentsList[2] = paymentObj;
         return "redirect:/document/newPaymentInvoice";
     }
@@ -111,12 +105,10 @@ public class DocumentController {
     public String postNewPaymentInvoice(@ModelAttribute("paymentInvoiceObj") @Valid PaymentInvoice paymentInvoiceObj, BindingResult bindingResult) {
         if(bindingResult.hasErrors()) return "document/new/PaymentInvoice";
 
-        paymentInvoiceObj.setPaymentInvoiceDate(LocalDateTime.now());
         if (number != -1 && paymentInvoiceObj.getNumber() != number) {
             paymentInvoiceObj.setNumber(this.number);
-            paymentInvoiceObj.setPaymentInvoiceDate(LocalDateTime.now());
         }
-
+        paymentInvoiceObj.setPaymentInvoiceDate(LocalDateTime.now());
         documentsList[3] = paymentInvoiceObj;
         documentDAO.save(documentsList);
         return "redirect:/document";
@@ -134,18 +126,19 @@ public class DocumentController {
     }
 
     @PostMapping("/{id}/postEditInvoice")
-    public String postEditInvoice(@PathVariable("id") int id, Invoice invoiceObj, RedirectAttributes redirectAttributes) {
-        if (documentDAO.existsByNumber(invoiceObj.getNumber())) {
+    public String postEditInvoice(@PathVariable("id") int id, @ModelAttribute("invoiceObj") @Valid Invoice invoiceObj, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        int itSelfNumber = documentDAO.getDocById(id, DocumentType.INVOICE).getNumber();
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.invoiceObj", bindingResult);
+            redirectAttributes.addFlashAttribute("invoice", invoiceObj);
+            return String.format("redirect:/document/%d/getEditInvoice", id);
+        }
+
+        if (documentDAO.existsByNumber(invoiceObj.getNumber()) && invoiceObj.getNumber() != itSelfNumber) {
             redirectAttributes.addFlashAttribute("invoiceExists", invoiceObj.getNumber());
             return String.format("redirect:/document/%d/getEditInvoice", id);
         }
-
         this.number = invoiceObj.getNumber();
-
-        if (documentDAO.existsByNumber(number)) {
-            redirectAttributes.addFlashAttribute("invoiceExists", this.number);
-            return String.format("redirect:/document/%d/getEditInvoice", id);
-        }
 
         invoiceObj.setInvoiceDate(LocalDateTime.now());
         System.out.println(invoiceObj.displayInfo());
@@ -162,15 +155,73 @@ public class DocumentController {
     }
 
     @PostMapping("/{id}/postEditOrder")
-    public String postEditOrder(@PathVariable("id") int id, @ModelAttribute("orderObj") @Valid Order orderObj) {
-        orderObj.setOrderDate(LocalDateTime.now());
-        if (number != -1 && orderObj.getNumber() != number) {
-            orderObj.setNumber(this.number);
-            orderObj.setOrderDate(LocalDateTime.now());
+    public String postEditOrder(@PathVariable("id") int id, @ModelAttribute("orderObj") @Valid Order orderObj, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.orderObj", bindingResult);
+            redirectAttributes.addFlashAttribute("order", orderObj);
+            return String.format("redirect:/document/%d/getEditOrder", id);
         }
 
-//        documentsList[1] = orderObj;
+        if (number != -1 && orderObj.getNumber() != number) {
+            orderObj.setNumber(this.number);
+        }
+        orderObj.setOrderDate(LocalDateTime.now());
+
+        // documentsList[1] = orderObj;
         System.out.println(orderObj.displayInfo());
+        return String.format("redirect:/document/%d/getEditPayment", id);
+    }
+
+    @GetMapping("/{id}/getEditPayment")
+    public String getEditPayment(@PathVariable("id") int id, Model model) {
+        Payment payment = (Payment) documentDAO.getDocById(id, DocumentType.PAYMENT);
+        model.addAttribute("payment", payment);
+        model.addAttribute("isEdit", true);
+        return "document/new/Payment";
+    }
+
+    @PostMapping("/{id}/postEditPayment")
+    public String postEditPayment(@PathVariable("id") int id, @ModelAttribute("paymentObj") @Valid Payment paymentObj, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.paymentObj", bindingResult);
+            redirectAttributes.addFlashAttribute("payment", paymentObj);
+            return String.format("redirect:/document/%d/getEditPayment", id);
+        }
+
+        if (number != -1 && paymentObj.getNumber() != number) {
+            paymentObj.setNumber(this.number);
+        }
+        paymentObj.setPaymentDate(LocalDateTime.now());
+
+        // documentsList[1] = orderObj;
+        System.out.println(paymentObj.displayInfo());
+        return String.format("redirect:/document/%d/getEditPaymentInvoice", id);
+    }
+
+    @GetMapping("/{id}/getEditPaymentInvoice")
+    public String getEditPaymentInvoice(@PathVariable("id") int id, Model model) {
+        PaymentInvoice paymentInvoice = (PaymentInvoice) documentDAO.getDocById(id, DocumentType.PAYMENT_INVOICE);
+        model.addAttribute("paymentInvoice", paymentInvoice);
+        model.addAttribute("isEdit", true);
+        return "document/new/PaymentInvoice";
+    }
+
+
+    @PostMapping("/{id}/postEditPaymentInvoice")
+    public String postEditPaymentInvoice(@PathVariable("id") int id, @ModelAttribute("paymentInvoiceObj") @Valid PaymentInvoice paymentInvoiceObj, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.paymentInvoiceObj", bindingResult);
+            redirectAttributes.addFlashAttribute("paymentInvoice", paymentInvoiceObj);
+            return String.format("redirect:/document/%d/getEditPaymentInvoice", id);
+        }
+
+        if (number != -1 && paymentInvoiceObj.getNumber() != number) {
+            paymentInvoiceObj.setNumber(this.number);
+        }
+        paymentInvoiceObj.setPaymentInvoiceDate(LocalDateTime.now());
+
+        // documentsList[1] = orderObj;
+        System.out.println(paymentInvoiceObj.displayInfo());
         return "redirect:/document";
     }
 }
