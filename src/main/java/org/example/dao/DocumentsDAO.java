@@ -46,16 +46,25 @@ public class DocumentsDAO {
         }
         return cachedDocuments;
     }
-
+    
     public List<Document> getDocList(int id) {
         Invoice invoice = invoiceDAO.findById(id);
-        return getDocumentsByNumber(invoice);
+        return getDocumentsByNumber(invoice, true);
     }
 
     private List<Document> getDocumentsByNumber(Invoice invoice) {
         List<Document> documents = new ArrayList<>();
         documents.add(invoice);
         documents.add(orderDAO.findByNumber(invoice.getNumber()));
+        documents.add(paymentDAO.findByNumber(invoice.getNumber()));
+        documents.add(paymentInvoiceDAO.findByNumber(invoice.getNumber()));
+        return documents;
+    }
+
+    private List<Document> getDocumentsByNumber(Invoice invoice, boolean isProducts) {
+        List<Document> documents = new ArrayList<>();
+        documents.add(invoice);
+        documents.add(orderDAO.findByNumber(invoice.getNumber(), isProducts));
         documents.add(paymentDAO.findByNumber(invoice.getNumber()));
         documents.add(paymentInvoiceDAO.findByNumber(invoice.getNumber()));
         return documents;
@@ -81,6 +90,14 @@ public class DocumentsDAO {
         orderDAO.save(jdbcTemplate, (Order) documents[1]);
         paymentDAO.save(jdbcTemplate, (Payment) documents[2]);
         paymentInvoiceDAO.save(jdbcTemplate, (PaymentInvoice) documents[3]);
+        clearCache();
+    }
+
+    public void update(int id, Document[] documents) {
+        invoiceDAO.update(jdbcTemplate, (Invoice) documents[0], id);
+        orderDAO.update(jdbcTemplate, (Order) documents[1], id);
+        paymentDAO.update(jdbcTemplate, (Payment) documents[2], id);
+        paymentInvoiceDAO.update(jdbcTemplate, (PaymentInvoice) documents[3], id);
         clearCache();
     }
 

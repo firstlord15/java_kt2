@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/document")
@@ -138,11 +139,11 @@ public class DocumentController {
             redirectAttributes.addFlashAttribute("invoiceExists", invoiceObj.getNumber());
             return String.format("redirect:/document/%d/getEditInvoice", id);
         }
-        this.number = invoiceObj.getNumber();
 
+        this.number = invoiceObj.getNumber();
         invoiceObj.setInvoiceDate(LocalDateTime.now());
         System.out.println(invoiceObj.displayInfo());
-//        documentsList[0] = invoiceObj;
+        documentsList[0] = invoiceObj;
         return String.format("redirect:/document/%d/getEditOrder", id);
     }
 
@@ -167,7 +168,7 @@ public class DocumentController {
         }
         orderObj.setOrderDate(LocalDateTime.now());
 
-        // documentsList[1] = orderObj;
+        documentsList[1] = orderObj;
         System.out.println(orderObj.displayInfo());
         return String.format("redirect:/document/%d/getEditPayment", id);
     }
@@ -192,9 +193,8 @@ public class DocumentController {
             paymentObj.setNumber(this.number);
         }
         paymentObj.setPaymentDate(LocalDateTime.now());
-
-        // documentsList[1] = orderObj;
         System.out.println(paymentObj.displayInfo());
+        documentsList[2] = paymentObj;
         return String.format("redirect:/document/%d/getEditPaymentInvoice", id);
     }
 
@@ -219,9 +219,9 @@ public class DocumentController {
             paymentInvoiceObj.setNumber(this.number);
         }
         paymentInvoiceObj.setPaymentInvoiceDate(LocalDateTime.now());
-
-        // documentsList[1] = orderObj;
         System.out.println(paymentInvoiceObj.displayInfo());
+        documentsList[3] = paymentInvoiceObj;
+        documentDAO.update(id, documentsList);
         return "redirect:/document";
     }
 }

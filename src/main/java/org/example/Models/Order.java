@@ -65,27 +65,31 @@ public class Order implements Document {
     }
 
     public List<String> getProducts() {
-        if (products == null){
-            products = new ArrayList<>();
-        }
-
+        if (products == null) products = new ArrayList<>();
         return products;
     }
 
-    public void setProducts(ArrayList<String> products) {
+    public void setProducts(List<String> products) {
         this.products = products;
     }
 
     @Override
     public List<String> displayInfo() {
-//        String[] productInfo = getProducts().get(0).split(" ");
-
         List<String> list = new ArrayList<>();
-        list.add("id: "+ getId());
-        list.add("number: "+ getNumber());
-        list.add("date: "+ getOrderDate());
-        list.add("customerName: "+ getBuyerName());
-//        list.add("Products: "+ productInfo[0] + " " + productInfo[1] + " " + productInfo[2] + " " + " (+" +  (getProducts().size() - 1) +")");
+        list.add("id: " + getId());
+        list.add("number: " + getNumber());
+        list.add("date: " + getOrderDate());
+        list.add("customerName: " + getBuyerName());
+
+        if (!getProducts().isEmpty()) {
+            String[] firstProductInfo = getProducts().get(0).split(" ");
+            String firstProductName = firstProductInfo.length > 0 ? firstProductInfo[0] : "";
+            String firstProductPrice = firstProductInfo.length > 1 ? firstProductInfo[1] : "";
+            String size = getProducts().size() > 1 ? " (+" + (getProducts().size() - 1) + ")" : "";
+            list.add("Products: " + firstProductName + " " + firstProductPrice + size);
+        } else {
+            list.add("Products: None");
+        }
 
         return list;
     }

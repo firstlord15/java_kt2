@@ -42,6 +42,14 @@ public class PaymentInvoiceDAO extends BaseDAO<PaymentInvoice> {
     }
 
     @Override
+    public void update(JdbcTemplate jdbcTemplate, PaymentInvoice entity, int id) {
+        String sql = "UPDATE paymentinvoice SET number=?, date=?, customername=?, comments=? WHERE id=?";
+        jdbcTemplate.update(
+                sql, entity.getNumber(), entity.getInvoiceDate(), entity.getCustomerName(), entity.getComments(), id
+        );
+    }
+
+    @Override
     public PaymentInvoice findById(int id) {
         return getJdbcTemplate().query("SELECT * FROM paymentinvoice WHERE id=?", new Object[]{id}, new BeanPropertyRowMapper<>(PaymentInvoice.class))
                 .stream().findAny().orElse(null);

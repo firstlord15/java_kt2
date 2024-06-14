@@ -36,6 +36,12 @@ public class InvoiceDAO extends BaseDAO<Invoice> {
     }
 
     @Override
+    public void update(JdbcTemplate jdbcTemplate, Invoice entity, int id) {
+        String sql = "UPDATE invoice SET number=?, clientname=?, date=?, address=? WHERE id=?";
+        jdbcTemplate.update(sql, entity.getNumber(), entity.getInvoiceDate(), entity.getClientName(), entity.getAddress(), id);
+    }
+
+    @Override
     public Invoice findById(int id) {
         return getJdbcTemplate().query("SELECT * FROM invoice WHERE id=?",
                 new Object[]{id},
