@@ -88,6 +88,13 @@ public class DocumentsDAO {
         clearCache();
     }
 
+    public void upload() {
+        invoiceDAO.upload();
+        orderDAO.upload();
+        paymentDAO.upload();
+        paymentInvoiceDAO.upload();
+    }
+
     public boolean existsByNumber(int number) {
         Integer count = jdbcTemplate.queryForObject(
                 "SELECT COUNT(*) FROM invoice WHERE number = ?",

@@ -43,9 +43,7 @@ public class OrderDAO extends BaseDAO<Order> {
         if (order.getProducts() != null) {
             for (String product : order.getProducts()) {
                 String[] productsList = null;
-                try { productsList = product.trim().split(" : "); }
-                catch (Exception e) { productsList = product.trim().split(":"); }
-
+                productsList = product.trim().split(" : ");
                 if (productsList.length == 2) {
                     try {
                         String productName = productsList[0];
