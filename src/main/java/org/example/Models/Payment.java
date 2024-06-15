@@ -1,6 +1,7 @@
 package org.example.Models;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ public class Payment implements Document {
     private int paymentNumber;
     private LocalDateTime paymentDate; // дата и время
     private String paymentName; // Плательщик // тип оплаты и данные краты если онлайн *********7842
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 
     public Payment(int id, int paymentNumber, LocalDateTime paymentDate, String paymentName) {
         this.id = id;
@@ -44,11 +46,11 @@ public class Payment implements Document {
         this.paymentName = nameSupplier;
     }
 
-    public LocalDateTime getPaymentDate() {
+    public LocalDateTime getDate() {
         return paymentDate;
     }
 
-    public void setPaymentDate(LocalDateTime paymentDate) {
+    public void setDate(LocalDateTime paymentDate) {
         this.paymentDate = paymentDate;
     }
 
@@ -68,7 +70,7 @@ public class Payment implements Document {
         List<String> list = new ArrayList<>();
         list.add("id: "+ getId());
         list.add("number: "+ getNumber());
-        list.add("date: "+ getPaymentDate());
+        list.add("date: "+ getDate().format(formatter));
         list.add("clientName: "+ getPaymentName());
 
         return list;

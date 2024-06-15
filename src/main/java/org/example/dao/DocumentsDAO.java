@@ -49,22 +49,13 @@ public class DocumentsDAO {
     }
     
     public List<Document> getDocList(int id) {
-        return getDocumentsByNumber(invoiceDAO.findById(id), true);
+        return getDocumentsByNumber(invoiceDAO.findById(id));
     }
 
     private List<Document> getDocumentsByNumber(Invoice invoice) {
         List<Document> documents = new ArrayList<>();
         documents.add(invoice);
         documents.add(orderDAO.findByNumber(invoice.getNumber()));
-        documents.add(paymentDAO.findByNumber(invoice.getNumber()));
-        documents.add(paymentInvoiceDAO.findByNumber(invoice.getNumber()));
-        return documents;
-    }
-
-    private List<Document> getDocumentsByNumber(Invoice invoice, boolean isProducts) {
-        List<Document> documents = new ArrayList<>();
-        documents.add(invoice);
-        documents.add(orderDAO.findByNumber(invoice.getNumber(), isProducts));
         documents.add(paymentDAO.findByNumber(invoice.getNumber()));
         documents.add(paymentInvoiceDAO.findByNumber(invoice.getNumber()));
         return documents;

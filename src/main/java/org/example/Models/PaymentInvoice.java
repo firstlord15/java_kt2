@@ -1,5 +1,6 @@
 package org.example.Models;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ public class PaymentInvoice implements Document {
     private LocalDateTime paymentInvoiceDate;
     private String customerName;
     private String comments;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 
     public PaymentInvoice(int id, int paymentInvoiceNumber, LocalDateTime paymentInvoiceDate, String customerName, String comments) {
         this.id = id;
@@ -44,11 +46,11 @@ public class PaymentInvoice implements Document {
         this.customerName = customerName;
     }
 
-    public LocalDateTime getInvoiceDate() {
+    public LocalDateTime getDate() {
         return paymentInvoiceDate;
     }
 
-    public void setPaymentInvoiceDate(LocalDateTime invoiceDate) {
+    public void setDate(LocalDateTime invoiceDate) {
         this.paymentInvoiceDate = invoiceDate;
     }
 
@@ -75,7 +77,7 @@ public class PaymentInvoice implements Document {
         List<String> list = new ArrayList<>();
         list.add("id: "+ getId());
         list.add("number: "+ getNumber());
-        list.add("date: "+ getInvoiceDate());
+        list.add("date: "+ getDate().format(formatter));
         list.add("customerName: "+ getCustomerName());
         list.add("comments: "+ getComments());
 

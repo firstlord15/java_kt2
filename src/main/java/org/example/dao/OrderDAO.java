@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -66,14 +67,14 @@ public class OrderDAO extends BaseDAO<Order> {
     public void save(JdbcTemplate jdbcTemplate, Order order) {
         String sqlMain = "INSERT INTO \"order\" (number, date, buyername) VALUES (?, ?, ?)";
         String sqlProducts = "INSERT INTO products (name, price, id_orders) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sqlMain, order.getNumber(), order.getOrderDate() != null ? order.getOrderDate() : LocalDateTime.now(), order.getBuyerName());
+        jdbcTemplate.update(sqlMain, order.getNumber(), order.getDate() != null ? order.getDate() : LocalDateTime.now(), order.getBuyerName());
         addProducts(sqlProducts, order, jdbcTemplate);
     }
 
     @Override
     public void update(JdbcTemplate jdbcTemplate, Order entity, int id) {
         String sqlMain = "UPDATE \"order\" SET number=?, buyername=?, date=? WHERE id=?";
-        jdbcTemplate.update(sqlMain, entity.getNumber(), entity.getBuyerName(), entity.getOrderDate(), id);
+        jdbcTemplate.update(sqlMain, entity.getNumber(), entity.getBuyerName(), entity.getDate(), id);
 
         // Удаляем старые продукты перед вставкой новых
         String sqlProducts = "DELETE FROM products WHERE id_orders=?";
@@ -95,29 +96,33 @@ public class OrderDAO extends BaseDAO<Order> {
         });
     }
 
-    @Override
-    public Order findById(int locator) {
-        Order order = getJdbcTemplate().query(
-                "SELECT * FROM \"order\" WHERE id = ?", new Object[]{locator}, new BeanPropertyRowMapper<>(Order.class)
-        ).stream().findAny().orElse(null);
-        Objects.requireNonNull(order).setProducts(getDBProducts(locator));
+    private Order mapRowToOrder(ResultSet rs) throws SQLException {
+        Order order = new Order();
+        order.setId(rs.getInt("id"));
+        order.setNumber(rs.getInt("number"));
+        order.setBuyerName(rs.getString("buyerName"));
+        Timestamp timestamp = rs.getTimestamp("date");
+        if (timestamp != null) {
+            order.setDate(timestamp.toLocalDateTime());
+        }
+        return order;
+    }
 
+    @Override
+    public Order findById(int id) {
+        Order order = getJdbcTemplate().query(
+                "SELECT * FROM \"order\" WHERE id = ?", new Object[]{id}, (rs, rowNum) -> mapRowToOrder(rs)
+        ).stream().findAny().orElse(null);
+        Objects.requireNonNull(order).setProducts(getDBProducts(order.getId()));
         return order;
     }
 
     @Override
     public Order findByNumber(int number) {
-        return getJdbcTemplate().query(
-                "SELECT * FROM \"order\" WHERE number = ?", new Object[]{number}, new BeanPropertyRowMapper<>(Order.class)
-        ).stream().findAny().orElse(null);
-    }
-
-    public Order findByNumber(int number, boolean isProduct) {
         Order order = getJdbcTemplate().query(
-                "SELECT * FROM \"order\" WHERE number = ?", new Object[]{number}, new BeanPropertyRowMapper<>(Order.class)
+                "SELECT * FROM \"order\" WHERE number = ?", new Object[]{number}, (rs, rowNum) -> mapRowToOrder(rs)
         ).stream().findAny().orElse(null);
         Objects.requireNonNull(order).setProducts(getDBProducts(order.getId()));
-
         return order;
     }
 

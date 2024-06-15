@@ -1,6 +1,7 @@
 package org.example.Models;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public class Order implements Document {
     private LocalDateTime orderDate;
     private String buyerName;
     private List<String> products;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 
     public Order() {
         products = new ArrayList<>();
@@ -48,11 +50,11 @@ public class Order implements Document {
         return DocumentType.ORDER;
     }
 
-    public LocalDateTime getOrderDate() {
+    public LocalDateTime getDate() {
         return orderDate;
     }
 
-    public void setOrderDate(LocalDateTime orderDate) {
+    public void setDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -78,7 +80,7 @@ public class Order implements Document {
         List<String> list = new ArrayList<>();
         list.add("id: " + getId());
         list.add("number: " + getNumber());
-        list.add("date: " + getOrderDate());
+        list.add("date: " + getDate().format(formatter));
         list.add("customerName: " + getBuyerName());
 
         if (!getProducts().isEmpty()) {

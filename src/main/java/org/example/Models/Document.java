@@ -1,6 +1,4 @@
 package org.example.Models;
-
-import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.List;
 
 public interface Document {

@@ -50,7 +50,7 @@ public class DocumentController {
         if (bindingResult.hasErrors()) {
             return "document/new/Invoice";
         }
-        invoiceObj.setInvoiceDate(LocalDateTime.now());
+        invoiceObj.setDate(LocalDateTime.now());
         this.number = invoiceObj.getNumber();
 
         if (documentDAO.existsByNumber(number)) {
@@ -73,7 +73,7 @@ public class DocumentController {
         if (number != -1 && orderObj.getNumber() != number){
             orderObj.setNumber(this.number);
         }
-        orderObj.setOrderDate(LocalDateTime.now());
+        orderObj.setDate(LocalDateTime.now());
 
         documentsList[1] = orderObj;
         return "redirect:/document/newPayment";
@@ -91,7 +91,7 @@ public class DocumentController {
         if (number != -1 && paymentObj.getNumber() != number) {
             paymentObj.setNumber(this.number);
         }
-        paymentObj.setPaymentDate(LocalDateTime.now());
+        paymentObj.setDate(LocalDateTime.now());
         documentsList[2] = paymentObj;
         return "redirect:/document/newPaymentInvoice";
     }
@@ -108,7 +108,7 @@ public class DocumentController {
         if (number != -1 && paymentInvoiceObj.getNumber() != number) {
             paymentInvoiceObj.setNumber(this.number);
         }
-        paymentInvoiceObj.setPaymentInvoiceDate(LocalDateTime.now());
+        paymentInvoiceObj.setDate(LocalDateTime.now());
         documentsList[3] = paymentInvoiceObj;
         documentDAO.save(documentsList);
         return "redirect:/document";
@@ -140,7 +140,7 @@ public class DocumentController {
         }
 
         this.number = invoiceObj.getNumber();
-        invoiceObj.setInvoiceDate(LocalDateTime.now());
+        invoiceObj.setDate(LocalDateTime.now());
 
         documentsList[0] = invoiceObj;
         return String.format("redirect:/document/%d/getEditOrder", id);
@@ -163,7 +163,7 @@ public class DocumentController {
         }
 
         if (number != -1 && orderObj.getNumber() != number) orderObj.setNumber(this.number);
-        orderObj.setOrderDate(LocalDateTime.now());
+        orderObj.setDate(LocalDateTime.now());
 
         documentsList[1] = orderObj;
         return String.format("redirect:/document/%d/getEditPayment", id);
@@ -186,7 +186,7 @@ public class DocumentController {
         }
 
         if (number != -1 && paymentObj.getNumber() != number) paymentObj.setNumber(this.number);
-        paymentObj.setPaymentDate(LocalDateTime.now());
+        paymentObj.setDate(LocalDateTime.now());
 
         documentsList[2] = paymentObj;
         return String.format("redirect:/document/%d/getEditPaymentInvoice", id);
@@ -210,7 +210,7 @@ public class DocumentController {
         }
 
         if (number != -1 && paymentInvoiceObj.getNumber() != number) paymentInvoiceObj.setNumber(this.number);
-        paymentInvoiceObj.setPaymentInvoiceDate(LocalDateTime.now());
+        paymentInvoiceObj.setDate(LocalDateTime.now());
 
         documentsList[3] = paymentInvoiceObj;
         documentDAO.update(id, documentsList);
