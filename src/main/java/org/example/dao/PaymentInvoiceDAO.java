@@ -1,6 +1,5 @@
 package org.example.dao;
 
-import org.example.Models.Payment;
 import org.example.Models.PaymentInvoice;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -29,7 +28,7 @@ public class PaymentInvoiceDAO extends BaseDAO<PaymentInvoice> {
 
     @Override
     public void upload() {
-        setEntities(getJdbcTemplate().query("SELECT * FROM paymentinvoice", new BeanPropertyRowMapper<>(PaymentInvoice.class)));
+        setEntities(getJdbcTemplate().query("SELECT * FROM paymentinvoice ORDER BY id", new BeanPropertyRowMapper<>(PaymentInvoice.class)));
     }
 
     @Override

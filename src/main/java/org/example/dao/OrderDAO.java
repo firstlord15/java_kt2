@@ -1,12 +1,13 @@
 package org.example.dao;
 
-import org.example.Models.Invoice;
 import org.example.Models.Order;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -34,21 +35,28 @@ public class OrderDAO extends BaseDAO<Order> {
 
     @Override
     public void upload() {
-        setEntities(getJdbcTemplate().query("SELECT * FROM \"order\"", new BeanPropertyRowMapper<>(Order.class)));
+        setEntities(getJdbcTemplate().query("SELECT * FROM \"order\" ORDER BY id", new BeanPropertyRowMapper<>(Order.class)));
     }
 
-    private void addProducts(String sql, Order order, JdbcTemplate jdbcTemplate){
+    private void addProducts(String sql, Order order, JdbcTemplate jdbcTemplate) {
         if (order.getProducts() != null) {
             for (String product : order.getProducts()) {
-                String[] productsList = product.split(" ");
+                String[] productsList = null;
+                try { productsList = product.trim().split(" : "); }
+                catch (Exception e) { productsList = product.trim().split(":"); }
+
                 if (productsList.length == 2) {
                     try {
                         String productName = productsList[0];
-                        int productPrice = Integer.parseInt(productsList[1]);
+                        BigDecimal productPrice = new BigDecimal(productsList[1]);
                         jdbcTemplate.update(sql, productName, productPrice, order.getId());
                     } catch (NumberFormatException e) {
-                        System.out.println(e.getMessage());;
+                        System.out.println("Error parsing product price: " + productsList[1]);
+                    } catch (DataAccessException e) {
+                        System.out.println("Error executing SQL update: " + e.getMessage());
                     }
+                } else {
+                    System.out.println("Invalid product format: " + product);
                 }
             }
         }
@@ -65,9 +73,14 @@ public class OrderDAO extends BaseDAO<Order> {
     @Override
     public void update(JdbcTemplate jdbcTemplate, Order entity, int id) {
         String sqlMain = "UPDATE \"order\" SET number=?, buyername=?, date=? WHERE id=?";
-        String sqlProducts = "UPDATE products SET name=?, price=? WHERE id_orders=?";
         jdbcTemplate.update(sqlMain, entity.getNumber(), entity.getBuyerName(), entity.getOrderDate(), id);
-        addProducts(sqlProducts, entity, jdbcTemplate);
+
+        // Удаляем старые продукты перед вставкой новых
+        String sqlProducts = "DELETE FROM products WHERE id_orders=?";
+        jdbcTemplate.update(sqlProducts, id);
+
+        String insertProductSql = "INSERT INTO products (name, price, id_orders) VALUES (?, ?, ?)";
+        addProducts(insertProductSql, entity, jdbcTemplate);
     }
 
     private List<String> getDBProducts(int id){
@@ -77,7 +90,7 @@ public class OrderDAO extends BaseDAO<Order> {
             public String mapRow(ResultSet rs, int rowNum) throws SQLException {
                 String name = rs.getString("name");
                 String price = rs.getBigDecimal("price").toString();
-                return name + " " + price;
+                return name + " : " + price;
             }
         });
     }
@@ -87,9 +100,8 @@ public class OrderDAO extends BaseDAO<Order> {
         Order order = getJdbcTemplate().query(
                 "SELECT * FROM \"order\" WHERE id = ?", new Object[]{locator}, new BeanPropertyRowMapper<>(Order.class)
         ).stream().findAny().orElse(null);
+        Objects.requireNonNull(order).setProducts(getDBProducts(locator));
 
-        if (order == null) return null;
-        order.setProducts(getDBProducts(locator));
         return order;
     }
 
@@ -104,10 +116,8 @@ public class OrderDAO extends BaseDAO<Order> {
         Order order = getJdbcTemplate().query(
                 "SELECT * FROM \"order\" WHERE number = ?", new Object[]{number}, new BeanPropertyRowMapper<>(Order.class)
         ).stream().findAny().orElse(null);
+        Objects.requireNonNull(order).setProducts(getDBProducts(order.getId()));
 
-        if (order == null) return null;
-        System.out.println(getDBProducts(order.getId()));
-        order.setProducts(getDBProducts(order.getId()));
         return order;
     }
 

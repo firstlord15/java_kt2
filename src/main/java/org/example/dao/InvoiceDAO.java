@@ -26,7 +26,7 @@ public class InvoiceDAO extends BaseDAO<Invoice> {
 
     @Override
     public void upload() {
-        setEntities(getJdbcTemplate().query("SELECT * FROM invoice", new BeanPropertyRowMapper<>(Invoice.class)));
+        setEntities(getJdbcTemplate().query("SELECT * FROM invoice ORDER BY id", new BeanPropertyRowMapper<>(Invoice.class)));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class InvoiceDAO extends BaseDAO<Invoice> {
 
     @Override
     public void update(JdbcTemplate jdbcTemplate, Invoice entity, int id) {
-        String sql = "UPDATE invoice SET number=?, clientname=?, date=?, address=? WHERE id=?";
+        String sql = "UPDATE invoice SET number=?, date=?, clientname=?, address=? WHERE id=?";
         jdbcTemplate.update(sql, entity.getNumber(), entity.getInvoiceDate(), entity.getClientName(), entity.getAddress(), id);
     }
 

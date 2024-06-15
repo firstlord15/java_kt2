@@ -29,7 +29,7 @@ public class PaymentDAO extends BaseDAO<Payment> {
 
     @Override
     public void upload() {
-        setEntities(getJdbcTemplate().query("SELECT * FROM payment", new BeanPropertyRowMapper<>(Payment.class)));
+        setEntities(getJdbcTemplate().query("SELECT * FROM payment ORDER BY id", new BeanPropertyRowMapper<>(Payment.class)));
     }
 
     @Override

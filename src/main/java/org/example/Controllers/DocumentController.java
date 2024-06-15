@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Controller
 @RequestMapping("/document")
@@ -142,7 +141,7 @@ public class DocumentController {
 
         this.number = invoiceObj.getNumber();
         invoiceObj.setInvoiceDate(LocalDateTime.now());
-        System.out.println(invoiceObj.displayInfo());
+
         documentsList[0] = invoiceObj;
         return String.format("redirect:/document/%d/getEditOrder", id);
     }
@@ -163,13 +162,10 @@ public class DocumentController {
             return String.format("redirect:/document/%d/getEditOrder", id);
         }
 
-        if (number != -1 && orderObj.getNumber() != number) {
-            orderObj.setNumber(this.number);
-        }
+        if (number != -1 && orderObj.getNumber() != number) orderObj.setNumber(this.number);
         orderObj.setOrderDate(LocalDateTime.now());
 
         documentsList[1] = orderObj;
-        System.out.println(orderObj.displayInfo());
         return String.format("redirect:/document/%d/getEditPayment", id);
     }
 
@@ -189,11 +185,9 @@ public class DocumentController {
             return String.format("redirect:/document/%d/getEditPayment", id);
         }
 
-        if (number != -1 && paymentObj.getNumber() != number) {
-            paymentObj.setNumber(this.number);
-        }
+        if (number != -1 && paymentObj.getNumber() != number) paymentObj.setNumber(this.number);
         paymentObj.setPaymentDate(LocalDateTime.now());
-        System.out.println(paymentObj.displayInfo());
+
         documentsList[2] = paymentObj;
         return String.format("redirect:/document/%d/getEditPaymentInvoice", id);
     }
@@ -215,11 +209,9 @@ public class DocumentController {
             return String.format("redirect:/document/%d/getEditPaymentInvoice", id);
         }
 
-        if (number != -1 && paymentInvoiceObj.getNumber() != number) {
-            paymentInvoiceObj.setNumber(this.number);
-        }
+        if (number != -1 && paymentInvoiceObj.getNumber() != number) paymentInvoiceObj.setNumber(this.number);
         paymentInvoiceObj.setPaymentInvoiceDate(LocalDateTime.now());
-        System.out.println(paymentInvoiceObj.displayInfo());
+
         documentsList[3] = paymentInvoiceObj;
         documentDAO.update(id, documentsList);
         return "redirect:/document";

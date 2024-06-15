@@ -1,20 +1,10 @@
 package org.example.Models;
-//import jakarta.persistence.Entity;
-//import jakarta.persistence.GeneratedValue;
-//import jakarta.persistence.GenerationType;
-//import jakarta.persistence.Id;
-
-import org.springframework.jdbc.core.JdbcTemplate;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 
-//@Entity
 public class Invoice implements Document {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private int invoiceNumber;
     private LocalDateTime invoiceDate; // дата и время
@@ -87,7 +77,7 @@ public class Invoice implements Document {
         List<String> list = new ArrayList<>();
         list.add("id: "+ getId());
         list.add("number: "+ getNumber());
-        list.add("date: "+ getInvoiceDate());
+        list.add("date: "+ getInvoiceDate().toString());
         list.add("clientName: "+ getClientName());
         list.add("address: "+ getAddress());
 

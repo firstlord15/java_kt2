@@ -44,12 +44,12 @@ public class DocumentsDAO {
                 cachedDocuments.add(documentList);
             }
         }
+
         return cachedDocuments;
     }
     
     public List<Document> getDocList(int id) {
-        Invoice invoice = invoiceDAO.findById(id);
-        return getDocumentsByNumber(invoice, true);
+        return getDocumentsByNumber(invoiceDAO.findById(id), true);
     }
 
     private List<Document> getDocumentsByNumber(Invoice invoice) {
@@ -72,17 +72,13 @@ public class DocumentsDAO {
 
     public Document getDocById(int id, DocumentType documentType) {
         switch (documentType) {
-            case INVOICE:
-                return invoiceDAO.findById(id);
-            case ORDER:
-                return orderDAO.findById(id);
-            case PAYMENT:
-                return paymentDAO.findById(id);
-            case PAYMENT_INVOICE:
-                return paymentInvoiceDAO.findById(id);
+            case INVOICE: return invoiceDAO.findById(id);
+            case ORDER: return orderDAO.findById(id);
+            case PAYMENT: return paymentDAO.findById(id);
+            case PAYMENT_INVOICE: return paymentInvoiceDAO.findById(id);
+            default:
+                throw new IllegalStateException("Unexpected value: " + documentType);
         }
-
-        return null;
     }
 
     public void save(Document[] documents) {
@@ -101,14 +97,6 @@ public class DocumentsDAO {
         clearCache();
     }
 
-    public List<List<Document>> index() {
-//        clearCache();
-        return getDocList();
-    }
-    public List<Document> show(int id) {
-        return getDocList(id);
-    }
-
     public boolean existsByNumber(int number) {
         Integer count = jdbcTemplate.queryForObject(
                 "SELECT COUNT(*) FROM invoice WHERE number = ?",
@@ -116,5 +104,13 @@ public class DocumentsDAO {
                 Integer.class
         );
         return count != null && count > 0;
+    }
+
+    public List<List<Document>> index() {
+        return getDocList();
+    }
+
+    public List<Document> show(int id) {
+        return getDocList(id);
     }
 }

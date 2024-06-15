@@ -1,20 +1,9 @@
 package org.example.Models;
-
-//import jakarta.persistence.Entity;
-//import jakarta.persistence.GeneratedValue;
-//import jakarta.persistence.GenerationType;
-//import jakarta.persistence.Id;
-
-import org.springframework.jdbc.core.JdbcTemplate;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Entity
 public class PaymentInvoice implements Document {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private int paymentInvoiceNumber;
     private LocalDateTime paymentInvoiceDate;
