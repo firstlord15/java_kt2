@@ -3,6 +3,7 @@ package org.example.Models;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Order implements Document {
@@ -84,11 +85,12 @@ public class Order implements Document {
         list.add("customerName: " + getBuyerName());
 
         if (!getProducts().isEmpty()) {
-            String[] firstProductInfo = getProducts().get(0).split(" ");
+            String[] firstProductInfo = getProducts().get(0).split(":");
             String firstProductName = firstProductInfo.length > 0 ? firstProductInfo[0] : "";
             String firstProductPrice = firstProductInfo.length > 1 ? firstProductInfo[1] : "";
             String size = getProducts().size() > 1 ? " (+" + (getProducts().size() - 1) + ")" : "";
-            list.add("Products: " + firstProductName + " " + firstProductPrice + size);
+            list.add("Products: " + firstProductName + " : " + firstProductPrice + size);
+            System.out.println(Arrays.toString(firstProductInfo));
         } else {
             list.add("Products: None");
         }
